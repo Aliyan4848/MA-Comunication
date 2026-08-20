@@ -1,7 +1,8 @@
 {
+  "title": "MA Communication",
   "description": "Discover and purchase premium mobile accessories through a modern, user-friendly ecommerce platform designed for tech-savvy consumers.",
   "robots": {
-    "index": false
+    "index": true
   },
   "accessibility": {
     "addBypassLinks": false,
