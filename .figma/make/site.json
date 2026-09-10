@@ -1,0 +1,14 @@
+{
+  "title": "MA Communication | Premium Mobile Accessories",
+  "description": "Shop premium chargers, earbuds, power banks, smartwatches and mobile accessories at MA Communication. Fast delivery across Pakistan, cash on delivery available.",
+  "openGraph": {
+    "image": "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=1200&h=630&fit=crop&auto=format"
+  },
+  "robots": {
+    "index": true
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
