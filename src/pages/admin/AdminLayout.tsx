@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { NavLink, Outlet, useNavigate } from "react-router-dom"
 import {
   LayoutDashboard, Package, Tag, ShoppingBag, Home, Settings,
@@ -8,6 +8,7 @@ import { useStore } from "../../contexts/StoreContext"
 import { useAuth } from "../../contexts/AuthContext"
 import { motion, AnimatePresence } from "framer-motion"
 import { useSeo } from "../../lib/seo"
+import AdminLogin from "./AdminLogin"
 
 const navItems = [
   { to: "/admin/dashboard", icon: LayoutDashboard, label: "Dashboard" },
@@ -19,13 +20,7 @@ const navItems = [
 ]
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
-  const navigate = useNavigate()
   const { session, isAdmin, loading } = useAuth()
-  useEffect(() => {
-    if (!loading && (!session || !isAdmin)) {
-      navigate("/admin", { replace: true })
-    }
-  }, [navigate, loading, session, isAdmin])
 
   if (loading) {
     return (
@@ -34,7 +29,12 @@ function RequireAuth({ children }: { children: React.ReactNode }) {
       </div>
     )
   }
-  if (!session || !isAdmin) return null
+  // Render the login screen in place rather than redirecting — this route and the
+  // login route used to be two separate <Route path="/admin"> siblings with an
+  // identical path, which is ambiguous and was causing a render crash on direct
+  // navigation. Now there's exactly one route for "/admin/*", and it decides
+  // internally what to show.
+  if (!session || !isAdmin) return <AdminLogin />
   return <>{children}</>
 }
 

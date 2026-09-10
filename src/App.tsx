@@ -20,7 +20,6 @@ import About from "./pages/About"
 import Contact from "./pages/Contact"
 import NotFound from "./pages/NotFound"
 
-import AdminLogin from "./pages/admin/AdminLogin"
 import AdminLayout from "./pages/admin/AdminLayout"
 import AdminDashboard from "./pages/admin/AdminDashboard"
 import AdminProducts from "./pages/admin/AdminProducts"
@@ -79,8 +78,8 @@ export default function App() {
           <CartProvider>
             <ToastProvider>
               <Routes>
-                {/* Admin */}
-                <Route path="/admin" element={<AdminLogin />} />
+                {/* Admin — a single route owns "/admin/*"; AdminLayout decides
+                    internally whether to show the login screen or the dashboard shell. */}
                 <Route path="/admin" element={<AdminLayout />}>
                   <Route index element={<Navigate to="/admin/dashboard" replace />} />
                   <Route path="dashboard" element={<AdminDashboard />} />
