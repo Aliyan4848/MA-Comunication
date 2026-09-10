@@ -24,6 +24,7 @@ export default function AdminCategories() {
   const openEdit = (c: Category) => { setEditing({ ...c }); setIsNew(false) }
   const close = () => { setEditing(null); setIsNew(false) }
 
+<<<<<<< HEAD
   const save = async () => {
     if (!editing?.name) return
     try {
@@ -48,6 +49,24 @@ export default function AdminCategories() {
     } catch (e: any) {
       toast(e.message || "Failed to delete category", "error")
     }
+=======
+  const save = () => {
+    if (!editing?.name) return
+    if (isNew) {
+      addCategory({ ...editing, id: "cat-" + Date.now(), slug: slugify(editing.name), sortOrder: categories.length + 1 })
+      toast("Category created")
+    } else {
+      updateCategory({ ...editing, slug: editing.slug || slugify(editing.name) })
+      toast("Category updated")
+    }
+    close()
+  }
+
+  const handleDelete = (id: string) => {
+    deleteCategory(id)
+    setConfirmDelete(null)
+    toast("Category deleted", "error")
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
   }
 
   const inputClass = "w-full bg-[#0A0F16] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-gray-600 outline-none focus:border-[#2B8EF0]/50 transition-colors"

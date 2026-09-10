@@ -37,7 +37,11 @@ const emptyProduct = (): Product => ({
 export default function AdminProductForm() {
   const { id } = useParams<{ id: string }>()
   const isNew = id === "new"
+<<<<<<< HEAD
   const { products, categories, addProduct, updateProduct, uploadProductImage } = useStore()
+=======
+  const { products, categories, addProduct, updateProduct } = useStore()
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
   const { toast } = useToast()
   const navigate = useNavigate()
 
@@ -47,7 +51,10 @@ export default function AdminProductForm() {
   const [specVal, setSpecVal] = useState("")
   const [featureInput, setFeatureInput] = useState("")
   const [imageUrl, setImageUrl] = useState("")
+<<<<<<< HEAD
   const [uploading, setUploading] = useState(false)
+=======
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
   const [saving, setSaving] = useState(false)
   const [autoSlug, setAutoSlug] = useState(isNew)
 
@@ -58,6 +65,7 @@ export default function AdminProductForm() {
     if (autoSlug) set("slug", slugify(name))
   }
 
+<<<<<<< HEAD
   const handleSave = async () => {
     if (!form.name || !form.price || !form.categoryId || !form.sku) {
       toast("Please fill in required fields: Name, SKU, Price, Category", "error")
@@ -79,6 +87,26 @@ export default function AdminProductForm() {
     } finally {
       setSaving(false)
     }
+=======
+  const handleSave = () => {
+    if (!form.name || !form.price || !form.categoryId) {
+      toast("Please fill in required fields: Name, Price, Category", "error")
+      return
+    }
+    setSaving(true)
+    setTimeout(() => {
+      const now = new Date().toISOString()
+      if (isNew) {
+        addProduct({ ...form, id: "prod-" + Date.now(), createdAt: now, updatedAt: now })
+        toast("Product created successfully!")
+      } else {
+        updateProduct({ ...form, updatedAt: now })
+        toast("Product updated successfully!")
+      }
+      setSaving(false)
+      navigate("/admin/products")
+    }, 400)
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
   }
 
   const addImage = () => {
@@ -95,6 +123,7 @@ export default function AdminProductForm() {
 
   const removeImage = (imgId: string) => set("images", form.images.filter(i => i.id !== imgId))
 
+<<<<<<< HEAD
   const handleFileUpload = async (files: FileList | null) => {
     if (!files || files.length === 0) return
     setUploading(true)
@@ -123,6 +152,8 @@ export default function AdminProductForm() {
     }
   }
 
+=======
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
   const addSpec = () => {
     if (!specKey || !specVal) return
     set("specifications", { ...form.specifications, [specKey]: specVal })
@@ -216,6 +247,7 @@ export default function AdminProductForm() {
 
           {/* Images */}
           <Section title="Product Images">
+<<<<<<< HEAD
             <div>
               <label className="flex items-center justify-center gap-2 px-4 py-3 border border-dashed border-white/15 rounded-xl text-sm text-gray-400 hover:border-[#2B8EF0]/40 hover:text-[#2B8EF0] cursor-pointer transition-colors">
                 <Image size={15} />
@@ -232,11 +264,19 @@ export default function AdminProductForm() {
             </div>
             <div className="flex gap-2">
               <input value={imageUrl} onChange={e => setImageUrl(e.target.value)} placeholder="Or paste an image URL" className={inputClass + " flex-1"} onKeyDown={e => e.key === "Enter" && addImage()} />
+=======
+            <div className="flex gap-2">
+              <input value={imageUrl} onChange={e => setImageUrl(e.target.value)} placeholder="https://image-url.com/photo.jpg" className={inputClass + " flex-1"} onKeyDown={e => e.key === "Enter" && addImage()} />
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
               <button onClick={addImage} className="px-4 py-2.5 bg-[#2B8EF0]/10 hover:bg-[#2B8EF0]/20 text-[#2B8EF0] border border-[#2B8EF0]/30 rounded-xl text-sm transition-colors flex items-center gap-1.5">
                 <Plus size={14} /> Add
               </button>
             </div>
+<<<<<<< HEAD
             <p className="text-xs text-gray-600 mt-1">Uploads are stored in Supabase Storage. First image is the main image — drag isn't wired up yet, so remove and re-add to reorder.</p>
+=======
+            <p className="text-xs text-gray-600 mt-1">Enter image URL and press Add or Enter. First image is the main image.</p>
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
             {form.images.length > 0 && (
               <div className="flex flex-wrap gap-3 mt-3">
                 {form.images.map((img, i) => (

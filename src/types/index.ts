@@ -50,7 +50,10 @@ export interface OrderItem {
 
 export interface Order {
   id: string
+<<<<<<< HEAD
   orderNumber: string
+=======
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
   customerName: string
   phone: string
   email: string
@@ -81,8 +84,13 @@ export interface SiteSettings {
   tiktok: string
   hours: string
   footerText: string
+<<<<<<< HEAD
   deliveryCharge: number
   currency: string
+=======
+  adminPassword: string
+  deliveryCharge: number
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
 }
 
 export interface HomepageContent {

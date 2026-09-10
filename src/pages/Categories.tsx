@@ -3,12 +3,18 @@ import { useStore } from "../contexts/StoreContext"
 import ProductCard from "../components/ui/ProductCard"
 import ScrollReveal from "../components/ui/ScrollReveal"
 import { motion } from "framer-motion"
+<<<<<<< HEAD
 import { useSeo } from "../lib/seo"
+=======
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
 
 export function CategoriesPage() {
   const { categories } = useStore()
   const active = categories.filter(c => c.active).sort((a, b) => a.sortOrder - b.sortOrder)
+<<<<<<< HEAD
   useSeo({ title: "All Categories", description: "Browse mobile accessory categories at MA Communication.", path: "/categories" })
+=======
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
 
   return (
     <div className="pt-20 min-h-screen">
@@ -45,6 +51,7 @@ export function CategoryDetailPage() {
   const catProducts = products.filter(p => p.published && p.categoryId === category?.id)
   const getCat = (id: string) => categories.find(c => c.id === id)
 
+<<<<<<< HEAD
   useSeo({
     title: category ? category.name : "Category not found",
     description: category?.description || `Shop ${category?.name || "this category"} at MA Communication.`,
@@ -53,6 +60,8 @@ export function CategoryDetailPage() {
     noIndex: !category,
   })
 
+=======
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
   if (!category) return (
     <div className="pt-28 min-h-screen flex items-center justify-center">
       <div className="text-center">

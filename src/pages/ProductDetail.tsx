@@ -7,7 +7,10 @@ import { useCart } from "../contexts/CartContext"
 import { useToast } from "../contexts/ToastContext"
 import ProductCard from "../components/ui/ProductCard"
 import ScrollReveal from "../components/ui/ScrollReveal"
+<<<<<<< HEAD
 import { useSeo, useStructuredData } from "../lib/seo"
+=======
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
 
 function formatPrice(p: number) {
   return "Rs. " + p.toLocaleString()
@@ -24,6 +27,7 @@ export default function ProductDetail() {
   const [imgIdx, setImgIdx] = useState(0)
   const [qty, setQty] = useState(1)
 
+<<<<<<< HEAD
   useSeo({
     title: product ? product.name : "Product not found",
     description: product ? (product.shortDescription || product.description).slice(0, 160) : undefined,
@@ -51,6 +55,8 @@ export default function ProductDetail() {
       : null
   )
 
+=======
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
   if (!product || !product.published) {
     return (
       <div className="pt-28 min-h-screen flex items-center justify-center px-4">

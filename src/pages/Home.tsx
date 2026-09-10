@@ -6,6 +6,7 @@ import PromoBanner from "../sections/home/PromoBanner"
 import WhySection from "../sections/home/WhySection"
 import CTASection from "../sections/home/CTASection"
 import { useStore } from "../contexts/StoreContext"
+<<<<<<< HEAD
 import { useSeo } from "../lib/seo"
 
 export default function Home() {
@@ -16,6 +17,11 @@ export default function Home() {
     path: "/",
     image: homepage.hero.image,
   })
+=======
+
+export default function Home() {
+  const { homepage } = useStore()
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
   return (
     <main>
       <HeroSection />

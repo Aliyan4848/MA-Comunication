@@ -1,17 +1,28 @@
 {
+<<<<<<< HEAD
   "name": "ma-communication",
+=======
+  "name": "figma-make-app",
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
   "private": true,
   "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
+<<<<<<< HEAD
     "prebuild": "node scripts/generate-sitemap.mjs",
     "build": "npm run prebuild && vite build",
+=======
+    "build": "vite build",
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
     "preview": "vite preview",
     "format": "oxfmt"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@supabase/supabase-js": "^2.45.0",
+=======
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
     "clsx": "^2.1.1",
     "framer-motion": "^13.1.1",
     "lucide-react": "^1.33.0",

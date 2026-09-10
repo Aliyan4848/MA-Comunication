@@ -2,12 +2,16 @@ import { useState } from "react"
 import { Save, Eye, EyeOff } from "lucide-react"
 import { useStore } from "../../contexts/StoreContext"
 import { useToast } from "../../contexts/ToastContext"
+<<<<<<< HEAD
 import { useAuth } from "../../contexts/AuthContext"
+=======
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
 import type { SiteSettings } from "../../types"
 
 export default function AdminSettings() {
   const { settings, updateSettings } = useStore()
   const { toast } = useToast()
+<<<<<<< HEAD
   const { updatePassword } = useAuth()
   const [form, setForm] = useState<SiteSettings>({ ...settings })
   const [showPass, setShowPass] = useState(false)
@@ -37,6 +41,17 @@ export default function AdminSettings() {
     if (error) { toast(error, "error"); return }
     setNewPassword("")
     toast("Admin password updated!")
+=======
+  const [form, setForm] = useState<SiteSettings>({ ...settings })
+  const [showPass, setShowPass] = useState(false)
+  const [saving, setSaving] = useState(false)
+
+  const set = (field: keyof SiteSettings, val: any) => setForm(prev => ({ ...prev, [field]: val }))
+
+  const save = () => {
+    setSaving(true)
+    setTimeout(() => { updateSettings(form); setSaving(false); toast("Settings saved!") }, 400)
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
   }
 
   const inputClass = "w-full bg-[#0A0F16] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-gray-600 outline-none focus:border-[#2B8EF0]/50 transition-colors"
@@ -111,6 +126,7 @@ export default function AdminSettings() {
 
         {/* Admin */}
         <Section title="Admin Access">
+<<<<<<< HEAD
           <Field label="New Admin Password">
             <div className="relative">
               <input
@@ -118,6 +134,14 @@ export default function AdminSettings() {
                 value={newPassword}
                 onChange={e => setNewPassword(e.target.value)}
                 placeholder="At least 8 characters"
+=======
+          <Field label="Admin Password">
+            <div className="relative">
+              <input
+                type={showPass ? "text" : "password"}
+                value={form.adminPassword}
+                onChange={e => set("adminPassword", e.target.value)}
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
                 className={inputClass + " pr-10"}
               />
               <button type="button" onClick={() => setShowPass(v => !v)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-400">
@@ -125,6 +149,7 @@ export default function AdminSettings() {
               </button>
             </div>
           </Field>
+<<<<<<< HEAD
           <button
             onClick={changePassword}
             disabled={passSaving || newPassword.length === 0}
@@ -135,6 +160,9 @@ export default function AdminSettings() {
           <p className="text-xs text-gray-600">
             Sign-in is handled by Supabase Auth. To add or remove admin accounts, use the Supabase dashboard (Authentication → Users, then add the user's id to the <code className="text-gray-500">admins</code> table).
           </p>
+=======
+          <p className="text-xs text-yellow-600">⚠ Store this password securely. You need it to log into this admin panel.</p>
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
         </Section>
       </div>
     </div>

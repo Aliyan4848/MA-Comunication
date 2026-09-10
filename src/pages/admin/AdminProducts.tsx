@@ -25,6 +25,7 @@ export default function AdminProducts() {
 
   const getCat = (id: string) => categories.find(c => c.id === id)?.name || "—"
 
+<<<<<<< HEAD
   const handleDelete = async (id: string) => {
     setConfirmDelete(null)
     try {
@@ -42,16 +43,36 @@ export default function AdminProducts() {
       name: p.name + " (Copy)",
       slug: p.slug + "-copy-" + Date.now(),
       sku: p.sku + "-COPY-" + Date.now(),
+=======
+  const handleDelete = (id: string) => {
+    deleteProduct(id)
+    setConfirmDelete(null)
+    toast("Product deleted", "error")
+  }
+
+  const handleDuplicate = (p: Product) => {
+    const dup: Product = {
+      ...p,
+      id: "prod-" + Date.now(),
+      name: p.name + " (Copy)",
+      slug: p.slug + "-copy-" + Date.now(),
+      sku: p.sku + "-COPY",
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
       published: false,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     }
+<<<<<<< HEAD
     try {
       await addProduct(dup)
       toast("Product duplicated as draft")
     } catch (e: any) {
       toast(e.message || "Failed to duplicate product", "error")
     }
+=======
+    addProduct(dup)
+    toast("Product duplicated as draft")
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
   }
 
   return (

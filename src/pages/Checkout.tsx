@@ -2,12 +2,20 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useCart } from "../contexts/CartContext"
 import { useStore } from "../contexts/StoreContext"
+<<<<<<< HEAD
+=======
+import type { Order } from "../types"
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
 
 function fmt(n: number) { return "Rs. " + n.toLocaleString() }
 
 export default function Checkout() {
   const { items, subtotal, clearCart } = useCart()
+<<<<<<< HEAD
   const { settings, placeOrder } = useStore()
+=======
+  const { settings, addOrder } = useStore()
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
   const navigate = useNavigate()
 
   const [form, setForm] = useState({
@@ -15,7 +23,10 @@ export default function Checkout() {
   })
   const [submitting, setSubmitting] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
+<<<<<<< HEAD
   const [submitError, setSubmitError] = useState("")
+=======
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
 
   const delivery = settings.deliveryCharge
   const total = subtotal + delivery
@@ -34,6 +45,7 @@ export default function Checkout() {
     return e
   }
 
+<<<<<<< HEAD
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setSubmitError("")
@@ -54,6 +66,29 @@ export default function Checkout() {
       setSubmitError(err.message || "We couldn't place your order. Please try again.")
       setSubmitting(false)
     }
+=======
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    const errs = validate()
+    if (Object.keys(errs).length > 0) { setErrors(errs); return }
+    setSubmitting(true)
+    const order: Order = {
+      id: "ORD-" + Date.now().toString(36).toUpperCase(),
+      ...form,
+      items: items.map(i => ({ productId: i.productId, name: i.name, price: i.price, quantity: i.quantity, image: i.image })),
+      subtotal,
+      deliveryCharge: delivery,
+      total,
+      status: "pending",
+      paymentMethod: "Cash on Delivery",
+      createdAt: new Date().toISOString(),
+    }
+    setTimeout(() => {
+      addOrder(order)
+      clearCart()
+      navigate(`/order-confirmation/${order.id}`)
+    }, 800)
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
   }
 
   const set = (field: string, val: string) => {
@@ -146,9 +181,12 @@ export default function Checkout() {
                   <div className="flex justify-between font-bold text-white text-base pt-1"><span>Total</span><span>{fmt(total)}</span></div>
                 </div>
 
+<<<<<<< HEAD
                 {submitError && (
                   <p className="text-red-400 text-xs mb-3">{submitError}</p>
                 )}
+=======
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
                 <button
                   type="submit"
                   disabled={submitting}

@@ -10,6 +10,7 @@ export default function AdminHomepage() {
   const [form, setForm] = useState<HomepageContent>({ ...homepage, hero: { ...homepage.hero }, promo: { ...homepage.promo }, featuredProductIds: [...homepage.featuredProductIds] })
   const [saving, setSaving] = useState(false)
 
+<<<<<<< HEAD
   const save = async () => {
     setSaving(true)
     try {
@@ -20,6 +21,11 @@ export default function AdminHomepage() {
     } finally {
       setSaving(false)
     }
+=======
+  const save = () => {
+    setSaving(true)
+    setTimeout(() => { updateHomepage(form); setSaving(false); toast("Homepage updated!") }, 400)
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
   }
 
   const inputClass = "w-full bg-[#0A0F16] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-gray-600 outline-none focus:border-[#2B8EF0]/50 transition-colors"

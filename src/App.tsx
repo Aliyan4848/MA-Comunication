@@ -3,7 +3,10 @@ import { AnimatePresence, motion } from "framer-motion"
 import { StoreProvider } from "./contexts/StoreContext"
 import { CartProvider } from "./contexts/CartContext"
 import { ToastProvider } from "./contexts/ToastContext"
+<<<<<<< HEAD
 import { AuthProvider } from "./contexts/AuthContext"
+=======
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
 
 import Navbar from "./components/layout/Navbar"
 import Footer from "./components/layout/Footer"
@@ -74,6 +77,7 @@ function StoreFront() {
 export default function App() {
   return (
     <BrowserRouter>
+<<<<<<< HEAD
       <AuthProvider>
         <StoreProvider>
           <CartProvider>
@@ -100,6 +104,32 @@ export default function App() {
           </CartProvider>
         </StoreProvider>
       </AuthProvider>
+=======
+      <StoreProvider>
+        <CartProvider>
+          <ToastProvider>
+            <Routes>
+              {/* Admin */}
+              <Route path="/admin" element={<AdminLogin />} />
+              <Route path="/admin" element={<AdminLayout />}>
+                <Route index element={<Navigate to="/admin/dashboard" replace />} />
+                <Route path="dashboard" element={<AdminDashboard />} />
+                <Route path="products" element={<AdminProducts />} />
+                <Route path="products/new" element={<AdminProductForm />} />
+                <Route path="products/:id" element={<AdminProductForm />} />
+                <Route path="categories" element={<AdminCategories />} />
+                <Route path="orders" element={<AdminOrders />} />
+                <Route path="orders/:id" element={<AdminOrderDetail />} />
+                <Route path="homepage" element={<AdminHomepage />} />
+                <Route path="settings" element={<AdminSettings />} />
+              </Route>
+              {/* Storefront */}
+              <Route path="/*" element={<StoreFront />} />
+            </Routes>
+          </ToastProvider>
+        </CartProvider>
+      </StoreProvider>
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
     </BrowserRouter>
   )
 }

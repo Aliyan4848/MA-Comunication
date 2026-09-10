@@ -5,7 +5,10 @@ import { motion, AnimatePresence } from "framer-motion"
 import { useStore } from "../contexts/StoreContext"
 import ProductCard from "../components/ui/ProductCard"
 import ScrollReveal from "../components/ui/ScrollReveal"
+<<<<<<< HEAD
 import { useSeo } from "../lib/seo"
+=======
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
 
 const SORT_OPTIONS = [
   { value: "featured", label: "Featured" },
@@ -19,11 +22,14 @@ export default function Shop() {
   const { products, categories } = useStore()
   const [params, setParams] = useSearchParams()
   const [filterOpen, setFilterOpen] = useState(false)
+<<<<<<< HEAD
   useSeo({
     title: "Shop All Products",
     description: "Browse the full MA Communication catalog of chargers, cables, earbuds, power banks and more.",
     path: "/shop",
   })
+=======
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
 
   const [search, setSearch] = useState(params.get("q") || "")
   const [selectedCategory, setSelectedCategory] = useState(params.get("cat") || "")

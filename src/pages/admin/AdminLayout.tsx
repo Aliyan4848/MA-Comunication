@@ -5,9 +5,13 @@ import {
   LogOut, Zap, Menu, X, ChevronRight
 } from "lucide-react"
 import { useStore } from "../../contexts/StoreContext"
+<<<<<<< HEAD
 import { useAuth } from "../../contexts/AuthContext"
 import { motion, AnimatePresence } from "framer-motion"
 import { useSeo } from "../../lib/seo"
+=======
+import { motion, AnimatePresence } from "framer-motion"
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
 
 const navItems = [
   { to: "/admin/dashboard", icon: LayoutDashboard, label: "Dashboard" },
@@ -20,6 +24,7 @@ const navItems = [
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate()
+<<<<<<< HEAD
   const { session, isAdmin, loading } = useAuth()
   useEffect(() => {
     if (!loading && (!session || !isAdmin)) {
@@ -35,6 +40,14 @@ function RequireAuth({ children }: { children: React.ReactNode }) {
     )
   }
   if (!session || !isAdmin) return null
+=======
+  useEffect(() => {
+    if (!sessionStorage.getItem("ma_admin_auth")) {
+      navigate("/admin", { replace: true })
+    }
+  }, [navigate])
+  if (!sessionStorage.getItem("ma_admin_auth")) return null
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
   return <>{children}</>
 }
 
@@ -42,14 +55,22 @@ export default function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const navigate = useNavigate()
   const { orders, products } = useStore()
+<<<<<<< HEAD
   const { signOut } = useAuth()
   useSeo({ title: "Admin", path: "/admin", noIndex: true })
+=======
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
 
   const pendingOrders = orders.filter(o => o.status === "pending").length
   const lowStock = products.filter(p => p.stock <= p.lowStockThreshold && p.published).length
 
+<<<<<<< HEAD
   const handleLogout = async () => {
     await signOut()
+=======
+  const handleLogout = () => {
+    sessionStorage.removeItem("ma_admin_auth")
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
     navigate("/admin", { replace: true })
   }
 

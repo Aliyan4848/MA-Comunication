@@ -1,14 +1,21 @@
+<<<<<<< HEAD
 import { useEffect, useState } from "react"
+=======
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
 import { useParams, Link } from "react-router-dom"
 import { CheckCircle, Package, ArrowRight } from "lucide-react"
 import { motion } from "framer-motion"
 import { useStore } from "../contexts/StoreContext"
+<<<<<<< HEAD
 import type { Order } from "../types"
+=======
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
 
 function fmt(n: number) { return "Rs. " + n.toLocaleString() }
 
 export default function OrderConfirmation() {
   const { id } = useParams<{ id: string }>()
+<<<<<<< HEAD
   const { fetchPublicOrder } = useStore()
   const [order, setOrder] = useState<Order | null | undefined>(undefined) // undefined = loading
 
@@ -26,6 +33,10 @@ export default function OrderConfirmation() {
       </div>
     )
   }
+=======
+  const { getOrder } = useStore()
+  const order = getOrder(id || "")
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
 
   if (!order) {
     return (
@@ -70,7 +81,11 @@ export default function OrderConfirmation() {
               <Package size={16} className="text-[#2B8EF0]" />
               <span className="text-sm font-semibold text-white">Order Details</span>
             </div>
+<<<<<<< HEAD
             <span className="text-xs font-mono text-[#2B8EF0] bg-[#2B8EF0]/10 px-2 py-1 rounded-lg">{order.orderNumber}</span>
+=======
+            <span className="text-xs font-mono text-[#2B8EF0] bg-[#2B8EF0]/10 px-2 py-1 rounded-lg">{order.id}</span>
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
           </div>
 
           <div className="p-6 space-y-4">
@@ -112,7 +127,11 @@ export default function OrderConfirmation() {
             </div>
 
             <div className="bg-[#0A0F16] rounded-xl px-4 py-3 text-xs text-gray-500">
+<<<<<<< HEAD
               Payment: <span className="text-emerald-400 font-medium">Cash on Delivery</span> · Status: <span className="text-yellow-400 font-medium capitalize">{order.status}</span>
+=======
+              Payment: <span className="text-emerald-400 font-medium">Cash on Delivery</span> · Status: <span className="text-yellow-400 font-medium">Pending Confirmation</span>
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
             </div>
           </div>
         </motion.div>

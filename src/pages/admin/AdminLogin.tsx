@@ -1,16 +1,23 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Zap, Eye, EyeOff, Lock } from "lucide-react"
+<<<<<<< HEAD
 import { useAuth } from "../../contexts/AuthContext"
 import { useSeo } from "../../lib/seo"
 
 export default function AdminLogin() {
   useSeo({ title: "Admin Login", path: "/admin", noIndex: true })
   const [email, setEmail] = useState("")
+=======
+import { useStore } from "../../contexts/StoreContext"
+
+export default function AdminLogin() {
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
   const [password, setPassword] = useState("")
   const [show, setShow] = useState(false)
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
+<<<<<<< HEAD
   const { signIn, isAdmin, session } = useAuth() as any
   const navigate = useNavigate()
 
@@ -25,6 +32,24 @@ export default function AdminLogin() {
       return
     }
     navigate("/admin/dashboard", { replace: true })
+=======
+  const { settings } = useStore()
+  const navigate = useNavigate()
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoading(true)
+    setError("")
+    setTimeout(() => {
+      if (password === settings.adminPassword) {
+        sessionStorage.setItem("ma_admin_auth", "1")
+        navigate("/admin/dashboard", { replace: true })
+      } else {
+        setError("Incorrect password. Please try again.")
+        setLoading(false)
+      }
+    }, 500)
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
   }
 
   return (
@@ -46,6 +71,7 @@ export default function AdminLogin() {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
+<<<<<<< HEAD
               <label className="block text-xs text-gray-500 mb-1.5">Admin Email</label>
               <input
                 type="email"
@@ -60,6 +86,9 @@ export default function AdminLogin() {
             </div>
             <div>
               <label className="block text-xs text-gray-500 mb-1.5">Password</label>
+=======
+              <label className="block text-xs text-gray-500 mb-1.5">Admin Password</label>
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
               <div className="relative">
                 <input
                   type={show ? "text" : "password"}
@@ -67,7 +96,11 @@ export default function AdminLogin() {
                   onChange={e => setPassword(e.target.value)}
                   placeholder="Enter password"
                   required
+<<<<<<< HEAD
                   autoComplete="current-password"
+=======
+                  autoFocus
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
                   className="w-full bg-[#0A0F16] border border-white/10 rounded-xl px-4 py-3 pr-10 text-sm text-white placeholder-gray-600 outline-none focus:border-[#2B8EF0]/50 transition-colors"
                 />
                 <button type="button" onClick={() => setShow(v => !v)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-400">
@@ -77,14 +110,22 @@ export default function AdminLogin() {
             </div>
 
             {error && <p className="text-red-400 text-xs">{error}</p>}
+<<<<<<< HEAD
             {session && !isAdmin && (
               <p className="text-yellow-500 text-xs">Signed in, but this account isn't an admin on this store.</p>
             )}
+=======
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
 
             <button type="submit" disabled={loading} className="w-full py-3 bg-[#2B8EF0] hover:bg-[#1A7DE0] text-white font-semibold rounded-xl transition-all disabled:opacity-50">
               {loading ? "Verifying..." : "Sign In"}
             </button>
           </form>
+<<<<<<< HEAD
+=======
+
+          <p className="text-xs text-gray-700 text-center mt-4">Default password: admin123</p>
+>>>>>>> edf10e1ecac4770e7e71900a0fd57266b81d2cc3
         </div>
 
         <p className="text-center mt-6 text-xs text-gray-700">
