@@ -28,7 +28,7 @@ function RequireAuth({ children }: { children: React.ReactNode }) {
   if (loading) {
     return (
       <div className="min-h-screen bg-[var(--ma-background)] flex items-center justify-center">
-        <p className="text-gray-500 text-sm">Loading...</p>
+        <p className="text-[var(--ma-muted)] text-sm">Loading...</p>
       </div>
     )
   }

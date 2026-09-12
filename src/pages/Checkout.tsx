@@ -62,62 +62,62 @@ export default function Checkout() {
   }
 
   const inputClass = (field: string) =>
-    `w-full bg-[#0A0F16] border rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 outline-none transition-colors ${errors[field] ? "border-red-500/50" : "border-white/10 focus:border-[#2B8EF0]/50"}`
+    `w-full bg-[var(--ma-surface)] border rounded-xl px-4 py-3 text-sm text-[var(--ma-foreground)] placeholder-[var(--ma-muted)] outline-none transition-colors ${errors[field] ? "border-red-500/50" : "border-[var(--ma-border)] focus:border-[#2B8EF0]/50"}`
 
   return (
     <div className="pt-20 min-h-screen">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
-        <h1 className="text-2xl font-bold text-white mb-8">Complete Your Order</h1>
+        <h1 className="text-2xl font-bold text-[var(--ma-foreground)] mb-8">Complete Your Order</h1>
 
         <form onSubmit={handleSubmit}>
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Form */}
             <div className="lg:col-span-2 space-y-6">
-              <div className="rounded-xl bg-[#10151D] border border-white/5 p-6">
-                <h3 className="font-semibold text-white mb-5">Delivery Information</h3>
+              <div className="rounded-xl bg-[var(--ma-card)] border border-[var(--ma-border)] p-6">
+                <h3 className="font-semibold text-[var(--ma-foreground)] mb-5">Delivery Information</h3>
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-xs text-gray-500 mb-1.5">Full Name *</label>
+                    <label className="block text-xs text-[var(--ma-muted)] mb-1.5">Full Name *</label>
                     <input value={form.customerName} onChange={e => set("customerName", e.target.value)} placeholder="Your full name" className={inputClass("customerName")} />
                     {errors.customerName && <p className="text-red-400 text-xs mt-1">{errors.customerName}</p>}
                   </div>
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs text-gray-500 mb-1.5">Phone Number *</label>
+                      <label className="block text-xs text-[var(--ma-muted)] mb-1.5">Phone Number *</label>
                       <input value={form.phone} onChange={e => set("phone", e.target.value)} placeholder="+92 300 0000000" className={inputClass("phone")} />
                       {errors.phone && <p className="text-red-400 text-xs mt-1">{errors.phone}</p>}
                     </div>
                     <div>
-                      <label className="block text-xs text-gray-500 mb-1.5">Email (optional)</label>
+                      <label className="block text-xs text-[var(--ma-muted)] mb-1.5">Email (optional)</label>
                       <input value={form.email} onChange={e => set("email", e.target.value)} placeholder="your@email.com" className={inputClass("email")} />
                     </div>
                   </div>
                   <div>
-                    <label className="block text-xs text-gray-500 mb-1.5">City *</label>
+                    <label className="block text-xs text-[var(--ma-muted)] mb-1.5">City *</label>
                     <input value={form.city} onChange={e => set("city", e.target.value)} placeholder="Lahore, Karachi, Islamabad..." className={inputClass("city")} />
                     {errors.city && <p className="text-red-400 text-xs mt-1">{errors.city}</p>}
                   </div>
                   <div>
-                    <label className="block text-xs text-gray-500 mb-1.5">Complete Address *</label>
+                    <label className="block text-xs text-[var(--ma-muted)] mb-1.5">Complete Address *</label>
                     <textarea value={form.address} onChange={e => set("address", e.target.value)} placeholder="House/Flat number, Street, Area..." rows={3} className={inputClass("address") + " resize-none"} />
                     {errors.address && <p className="text-red-400 text-xs mt-1">{errors.address}</p>}
                   </div>
                   <div>
-                    <label className="block text-xs text-gray-500 mb-1.5">Order Notes (optional)</label>
+                    <label className="block text-xs text-[var(--ma-muted)] mb-1.5">Order Notes (optional)</label>
                     <textarea value={form.notes} onChange={e => set("notes", e.target.value)} placeholder="Any special instructions..." rows={2} className={inputClass("notes") + " resize-none"} />
                   </div>
                 </div>
               </div>
 
-              <div className="rounded-xl bg-[#10151D] border border-white/5 p-6">
-                <h3 className="font-semibold text-white mb-4">Payment Method</h3>
+              <div className="rounded-xl bg-[var(--ma-card)] border border-[var(--ma-border)] p-6">
+                <h3 className="font-semibold text-[var(--ma-foreground)] mb-4">Payment Method</h3>
                 <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-[#2B8EF0]/30 bg-[#2B8EF0]/5">
                   <div className="w-4 h-4 rounded-full border-2 border-[#2B8EF0] flex items-center justify-center">
                     <div className="w-2 h-2 rounded-full bg-[#2B8EF0]" />
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-white">Cash on Delivery</p>
-                    <p className="text-xs text-gray-500">Pay when you receive your order</p>
+                    <p className="text-sm font-medium text-[var(--ma-foreground)]">Cash on Delivery</p>
+                    <p className="text-xs text-[var(--ma-muted)]">Pay when you receive your order</p>
                   </div>
                 </div>
               </div>
@@ -125,25 +125,25 @@ export default function Checkout() {
 
             {/* Summary */}
             <div>
-              <div className="sticky top-24 rounded-xl bg-[#10151D] border border-white/5 p-6">
-                <h3 className="font-semibold text-white mb-5">Order Summary</h3>
+              <div className="sticky top-24 rounded-xl bg-[var(--ma-card)] border border-[var(--ma-border)] p-6">
+                <h3 className="font-semibold text-[var(--ma-foreground)] mb-5">Order Summary</h3>
                 <div className="space-y-3 mb-5">
                   {items.map(item => (
                     <div key={item.productId} className="flex gap-3">
-                      <img src={item.image} alt={item.name} className="w-12 h-12 rounded-lg object-cover bg-[#0A0F16] shrink-0" />
+                      <img src={item.image} alt={item.name} className="w-12 h-12 rounded-lg object-cover bg-[var(--ma-surface)] shrink-0" />
                       <div className="flex-1 min-w-0">
-                        <p className="text-xs text-gray-300 line-clamp-2 leading-snug">{item.name}</p>
-                        <p className="text-xs text-gray-500 mt-0.5">Qty: {item.quantity}</p>
+                        <p className="text-xs text-[var(--ma-foreground)] line-clamp-2 leading-snug">{item.name}</p>
+                        <p className="text-xs text-[var(--ma-muted)] mt-0.5">Qty: {item.quantity}</p>
                       </div>
-                      <p className="text-xs font-semibold text-white shrink-0">{fmt(item.price * item.quantity)}</p>
+                      <p className="text-xs font-semibold text-[var(--ma-foreground)] shrink-0">{fmt(item.price * item.quantity)}</p>
                     </div>
                   ))}
                 </div>
 
-                <div className="border-t border-white/5 pt-4 space-y-2 text-sm mb-5">
-                  <div className="flex justify-between text-gray-400"><span>Subtotal</span><span>{fmt(subtotal)}</span></div>
-                  <div className="flex justify-between text-gray-400"><span>Delivery</span><span>{fmt(delivery)}</span></div>
-                  <div className="flex justify-between font-bold text-white text-base pt-1"><span>Total</span><span>{fmt(total)}</span></div>
+                <div className="border-t border-[var(--ma-border)] pt-4 space-y-2 text-sm mb-5">
+                  <div className="flex justify-between text-[var(--ma-muted)]"><span>Subtotal</span><span>{fmt(subtotal)}</span></div>
+                  <div className="flex justify-between text-[var(--ma-muted)]"><span>Delivery</span><span>{fmt(delivery)}</span></div>
+                  <div className="flex justify-between font-bold text-[var(--ma-foreground)] text-base pt-1"><span>Total</span><span>{fmt(total)}</span></div>
                 </div>
 
                 {submitError && (

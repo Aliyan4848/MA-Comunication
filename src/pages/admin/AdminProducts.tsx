@@ -58,8 +58,8 @@ export default function AdminProducts() {
     <div>
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-xl font-bold text-white">Products</h1>
-          <p className="text-gray-500 text-sm mt-0.5">{products.length} total products</p>
+          <h1 className="text-xl font-bold text-[var(--ma-foreground)]">Products</h1>
+          <p className="text-[var(--ma-muted)] text-sm mt-0.5">{products.length} total products</p>
         </div>
         <button
           onClick={() => navigate("/admin/products/new")}
@@ -72,54 +72,54 @@ export default function AdminProducts() {
       {/* Filters */}
       <div className="flex gap-3 mb-6">
         <div className="relative flex-1 max-w-xs">
-          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
-          <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search products..." className="w-full bg-[#10151D] border border-white/10 rounded-xl pl-8 pr-4 py-2.5 text-sm text-white placeholder-gray-600 outline-none focus:border-[#2B8EF0]/40" />
+          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--ma-muted)]" />
+          <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search products..." className="w-full bg-[var(--ma-card)] border border-[var(--ma-border)] rounded-xl pl-8 pr-4 py-2.5 text-sm text-[var(--ma-foreground)] placeholder-[var(--ma-muted)] outline-none focus:border-[#2B8EF0]/40" />
         </div>
-        <select value={catFilter} onChange={e => setCatFilter(e.target.value)} className="bg-[#10151D] border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white outline-none focus:border-[#2B8EF0]/40 cursor-pointer">
+        <select value={catFilter} onChange={e => setCatFilter(e.target.value)} className="bg-[var(--ma-card)] border border-[var(--ma-border)] rounded-xl px-3 py-2.5 text-sm text-[var(--ma-foreground)] outline-none focus:border-[#2B8EF0]/40 cursor-pointer">
           <option value="">All Categories</option>
           {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
         </select>
       </div>
 
       {/* Table */}
-      <div className="rounded-xl bg-[#10151D] border border-white/5 overflow-hidden">
+      <div className="rounded-xl bg-[var(--ma-card)] border border-[var(--ma-border)] overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm min-w-[700px]">
             <thead>
-              <tr className="border-b border-white/5">
-                <th className="text-left py-3 px-4 text-xs text-gray-500 font-medium uppercase tracking-wide">Product</th>
-                <th className="text-left py-3 px-4 text-xs text-gray-500 font-medium uppercase tracking-wide">Category</th>
-                <th className="text-left py-3 px-4 text-xs text-gray-500 font-medium uppercase tracking-wide">Price</th>
-                <th className="text-left py-3 px-4 text-xs text-gray-500 font-medium uppercase tracking-wide">Stock</th>
-                <th className="text-left py-3 px-4 text-xs text-gray-500 font-medium uppercase tracking-wide">Flags</th>
-                <th className="text-left py-3 px-4 text-xs text-gray-500 font-medium uppercase tracking-wide">Status</th>
+              <tr className="border-b border-[var(--ma-border)]">
+                <th className="text-left py-3 px-4 text-xs text-[var(--ma-muted)] font-medium uppercase tracking-wide">Product</th>
+                <th className="text-left py-3 px-4 text-xs text-[var(--ma-muted)] font-medium uppercase tracking-wide">Category</th>
+                <th className="text-left py-3 px-4 text-xs text-[var(--ma-muted)] font-medium uppercase tracking-wide">Price</th>
+                <th className="text-left py-3 px-4 text-xs text-[var(--ma-muted)] font-medium uppercase tracking-wide">Stock</th>
+                <th className="text-left py-3 px-4 text-xs text-[var(--ma-muted)] font-medium uppercase tracking-wide">Flags</th>
+                <th className="text-left py-3 px-4 text-xs text-[var(--ma-muted)] font-medium uppercase tracking-wide">Status</th>
                 <th className="py-3 px-4" />
               </tr>
             </thead>
             <tbody>
               <AnimatePresence>
                 {filtered.length === 0 ? (
-                  <tr><td colSpan={7} className="text-center py-12 text-gray-600 text-sm">No products found</td></tr>
+                  <tr><td colSpan={7} className="text-center py-12 text-[var(--ma-muted)] text-sm">No products found</td></tr>
                 ) : (
                   filtered.map(p => (
-                    <motion.tr key={p.id} layout initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="border-b border-white/5 last:border-0 hover:bg-white/[0.02] transition-colors">
+                    <motion.tr key={p.id} layout initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="border-b border-[var(--ma-border)] last:border-0 hover:bg-white/[0.02] transition-colors">
                       <td className="py-3 px-4">
                         <div className="flex items-center gap-3">
                           <img
                             src={p.images[0]?.url || ""}
                             alt={p.name}
-                            className="w-10 h-10 rounded-lg object-cover bg-[#0A0F16] border border-white/5 shrink-0"
+                            className="w-10 h-10 rounded-lg object-cover bg-[var(--ma-surface)] border border-[var(--ma-border)] shrink-0"
                           />
                           <div className="min-w-0">
-                            <p className="text-white font-medium text-sm line-clamp-1">{p.name}</p>
-                            <p className="text-gray-600 text-xs font-mono">{p.sku}</p>
+                            <p className="text-[var(--ma-foreground)] font-medium text-sm line-clamp-1">{p.name}</p>
+                            <p className="text-[var(--ma-muted)] text-xs font-mono">{p.sku}</p>
                           </div>
                         </div>
                       </td>
-                      <td className="py-3 px-4 text-gray-400 text-xs">{getCat(p.categoryId)}</td>
+                      <td className="py-3 px-4 text-[var(--ma-muted)] text-xs">{getCat(p.categoryId)}</td>
                       <td className="py-3 px-4">
-                        <p className="text-white text-sm font-medium">{fmt(p.salePrice ?? p.price)}</p>
-                        {p.salePrice && <p className="text-gray-600 text-xs line-through">{fmt(p.price)}</p>}
+                        <p className="text-[var(--ma-foreground)] text-sm font-medium">{fmt(p.salePrice ?? p.price)}</p>
+                        {p.salePrice && <p className="text-[var(--ma-muted)] text-xs line-through">{fmt(p.price)}</p>}
                       </td>
                       <td className="py-3 px-4">
                         <span className={`text-xs font-medium ${p.stock === 0 ? "text-red-400" : p.stock <= p.lowStockThreshold ? "text-yellow-400" : "text-emerald-400"}`}>
@@ -134,22 +134,22 @@ export default function AdminProducts() {
                         </div>
                       </td>
                       <td className="py-3 px-4">
-                        <span className={`text-xs px-2 py-0.5 rounded-full ${p.published ? "bg-emerald-500/10 text-emerald-400" : "bg-gray-500/10 text-gray-500"}`}>
+                        <span className={`text-xs px-2 py-0.5 rounded-full ${p.published ? "bg-emerald-500/10 text-emerald-400" : "bg-gray-500/10 text-[var(--ma-muted)]"}`}>
                           {p.published ? "Published" : "Draft"}
                         </span>
                       </td>
                       <td className="py-3 px-4">
                         <div className="flex items-center gap-1 justify-end">
-                          <a href={`/products/${p.slug}`} target="_blank" rel="noopener noreferrer" className="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-gray-500 hover:text-white transition-all">
+                          <a href={`/products/${p.slug}`} target="_blank" rel="noopener noreferrer" className="w-7 h-7 rounded-lg bg-white/5 hover:bg-[var(--ma-card-hover)] flex items-center justify-center text-[var(--ma-muted)] hover:text-[var(--ma-foreground)] transition-all">
                             <Eye size={13} />
                           </a>
-                          <button onClick={() => navigate(`/admin/products/${p.id}`)} className="w-7 h-7 rounded-lg bg-white/5 hover:bg-[#2B8EF0]/10 flex items-center justify-center text-gray-500 hover:text-[#2B8EF0] transition-all">
+                          <button onClick={() => navigate(`/admin/products/${p.id}`)} className="w-7 h-7 rounded-lg bg-white/5 hover:bg-[#2B8EF0]/10 flex items-center justify-center text-[var(--ma-muted)] hover:text-[#2B8EF0] transition-all">
                             <Edit size={13} />
                           </button>
-                          <button onClick={() => handleDuplicate(p)} className="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-gray-500 hover:text-white transition-all">
+                          <button onClick={() => handleDuplicate(p)} className="w-7 h-7 rounded-lg bg-white/5 hover:bg-[var(--ma-card-hover)] flex items-center justify-center text-[var(--ma-muted)] hover:text-[var(--ma-foreground)] transition-all">
                             <Copy size={13} />
                           </button>
-                          <button onClick={() => setConfirmDelete(p.id)} className="w-7 h-7 rounded-lg bg-white/5 hover:bg-red-500/10 flex items-center justify-center text-gray-500 hover:text-red-400 transition-all">
+                          <button onClick={() => setConfirmDelete(p.id)} className="w-7 h-7 rounded-lg bg-white/5 hover:bg-red-500/10 flex items-center justify-center text-[var(--ma-muted)] hover:text-red-400 transition-all">
                             <Trash2 size={13} />
                           </button>
                         </div>
@@ -167,11 +167,11 @@ export default function AdminProducts() {
       <AnimatePresence>
         {confirmDelete && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center px-4">
-            <motion.div initial={{ scale: 0.95 }} animate={{ scale: 1 }} exit={{ scale: 0.95 }} className="bg-[#10151D] border border-white/10 rounded-2xl p-6 max-w-sm w-full">
-              <h3 className="font-semibold text-white mb-2">Delete Product?</h3>
-              <p className="text-sm text-gray-400 mb-6">This action cannot be undone.</p>
+            <motion.div initial={{ scale: 0.95 }} animate={{ scale: 1 }} exit={{ scale: 0.95 }} className="bg-[var(--ma-card)] border border-[var(--ma-border)] rounded-2xl p-6 max-w-sm w-full">
+              <h3 className="font-semibold text-[var(--ma-foreground)] mb-2">Delete Product?</h3>
+              <p className="text-sm text-[var(--ma-muted)] mb-6">This action cannot be undone.</p>
               <div className="flex gap-3">
-                <button onClick={() => setConfirmDelete(null)} className="flex-1 py-2.5 rounded-xl border border-white/10 text-sm text-gray-400 hover:text-white transition-colors">Cancel</button>
+                <button onClick={() => setConfirmDelete(null)} className="flex-1 py-2.5 rounded-xl border border-[var(--ma-border)] text-sm text-[var(--ma-muted)] hover:text-[var(--ma-foreground)] transition-colors">Cancel</button>
                 <button onClick={() => handleDelete(confirmDelete)} className="flex-1 py-2.5 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-400 text-sm font-medium transition-colors border border-red-500/20">Delete</button>
               </div>
             </motion.div>

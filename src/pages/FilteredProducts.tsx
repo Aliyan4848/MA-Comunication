@@ -17,12 +17,12 @@ export default function FilteredProducts({ title, subtitle, filter }: Props) {
     <div className="pt-20 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
         <ScrollReveal>
-          <h1 className="text-3xl font-bold text-white mb-2">{title}</h1>
-          <p className="text-gray-500 text-sm mb-10">{subtitle} · {displayed.length} products</p>
+          <h1 className="text-3xl font-bold text-[var(--ma-foreground)] mb-2">{title}</h1>
+          <p className="text-[var(--ma-muted)] text-sm mb-10">{subtitle} · {displayed.length} products</p>
         </ScrollReveal>
         {displayed.length === 0 ? (
           <div className="text-center py-20">
-            <p className="text-gray-500">No products found.</p>
+            <p className="text-[var(--ma-muted)]">No products found.</p>
           </div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">

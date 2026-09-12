@@ -60,7 +60,7 @@ export default function OrderTimeline({
                   border: done ? "none" : "1px solid var(--ma-border)",
                 }}
               >
-                <Icon size={14} className={done ? "text-white" : "text-[var(--ma-muted)]"} />
+                <Icon size={14} className={done ? "text-[var(--ma-foreground)]" : "text-[var(--ma-muted)]"} />
               </div>
               <p className={`text-[10px] sm:text-xs mt-2 text-center leading-tight ${done ? "text-[var(--ma-foreground)] font-medium" : "text-[var(--ma-muted)]"}`}>
                 {step.label}

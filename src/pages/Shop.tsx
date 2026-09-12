@@ -79,13 +79,13 @@ export default function Shop() {
   const Filters = () => (
     <div className="space-y-6">
       <div>
-        <p className="text-xs font-semibold text-white uppercase tracking-widest mb-3">Category</p>
+        <p className="text-xs font-semibold text-[var(--ma-foreground)] uppercase tracking-widest mb-3">Category</p>
         <div className="space-y-1.5">
-          <button onClick={() => setSelectedCategory("")} className={`w-full text-left text-sm px-3 py-2 rounded-lg transition-colors ${!selectedCategory ? "bg-[#2B8EF0]/10 text-[#2B8EF0]" : "text-gray-400 hover:text-white hover:bg-white/5"}`}>
+          <button onClick={() => setSelectedCategory("")} className={`w-full text-left text-sm px-3 py-2 rounded-lg transition-colors ${!selectedCategory ? "bg-[#2B8EF0]/10 text-[#2B8EF0]" : "text-[var(--ma-muted)] hover:text-[var(--ma-foreground)] hover:bg-[var(--ma-card-hover)]"}`}>
             All Categories
           </button>
           {activeCategories.map(c => (
-            <button key={c.id} onClick={() => setSelectedCategory(c.id)} className={`w-full text-left text-sm px-3 py-2 rounded-lg transition-colors ${selectedCategory === c.id ? "bg-[#2B8EF0]/10 text-[#2B8EF0]" : "text-gray-400 hover:text-white hover:bg-white/5"}`}>
+            <button key={c.id} onClick={() => setSelectedCategory(c.id)} className={`w-full text-left text-sm px-3 py-2 rounded-lg transition-colors ${selectedCategory === c.id ? "bg-[#2B8EF0]/10 text-[#2B8EF0]" : "text-[var(--ma-muted)] hover:text-[var(--ma-foreground)] hover:bg-[var(--ma-card-hover)]"}`}>
               {c.name}
             </button>
           ))}
@@ -93,26 +93,26 @@ export default function Shop() {
       </div>
 
       <div>
-        <p className="text-xs font-semibold text-white uppercase tracking-widest mb-3">Price Range</p>
+        <p className="text-xs font-semibold text-[var(--ma-foreground)] uppercase tracking-widest mb-3">Price Range</p>
         <div className="flex items-center gap-2">
           <input type="number" value={priceMin} onChange={e => setPriceMin(+e.target.value)} min={0}
-            className="w-full bg-[#10151D] border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-[#2B8EF0]/50" placeholder="Min" />
-          <span className="text-gray-600 shrink-0">–</span>
+            className="w-full bg-[var(--ma-card)] border border-[var(--ma-border)] rounded-lg px-3 py-2 text-sm text-[var(--ma-foreground)] outline-none focus:border-[#2B8EF0]/50" placeholder="Min" />
+          <span className="text-[var(--ma-muted)] shrink-0">–</span>
           <input type="number" value={priceMax} onChange={e => setPriceMax(+e.target.value)} min={0}
-            className="w-full bg-[#10151D] border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-[#2B8EF0]/50" placeholder="Max" />
+            className="w-full bg-[var(--ma-card)] border border-[var(--ma-border)] rounded-lg px-3 py-2 text-sm text-[var(--ma-foreground)] outline-none focus:border-[#2B8EF0]/50" placeholder="Max" />
         </div>
       </div>
 
       <div>
-        <p className="text-xs font-semibold text-white uppercase tracking-widest mb-3">Availability</p>
+        <p className="text-xs font-semibold text-[var(--ma-foreground)] uppercase tracking-widest mb-3">Availability</p>
         <label className="flex items-center gap-2 cursor-pointer">
           <input type="checkbox" checked={onlyInStock} onChange={e => setOnlyInStock(e.target.checked)} className="accent-[#2B8EF0]" />
-          <span className="text-sm text-gray-400">In Stock Only</span>
+          <span className="text-sm text-[var(--ma-muted)]">In Stock Only</span>
         </label>
       </div>
 
       <div>
-        <p className="text-xs font-semibold text-white uppercase tracking-widest mb-3">Filter By</p>
+        <p className="text-xs font-semibold text-[var(--ma-foreground)] uppercase tracking-widest mb-3">Filter By</p>
         <div className="space-y-2">
           {[
             { label: "Featured", state: onlyFeatured, set: setOnlyFeatured },
@@ -121,7 +121,7 @@ export default function Shop() {
           ].map(f => (
             <label key={f.label} className="flex items-center gap-2 cursor-pointer">
               <input type="checkbox" checked={f.state} onChange={e => f.set(e.target.checked)} className="accent-[#2B8EF0]" />
-              <span className="text-sm text-gray-400">{f.label}</span>
+              <span className="text-sm text-[var(--ma-muted)]">{f.label}</span>
             </label>
           ))}
         </div>
@@ -141,8 +141,8 @@ export default function Shop() {
         {/* Header */}
         <ScrollReveal>
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-white mb-2">Shop</h1>
-            <p className="text-gray-500 text-sm">
+            <h1 className="text-3xl font-bold text-[var(--ma-foreground)] mb-2">Shop</h1>
+            <p className="text-[var(--ma-muted)] text-sm">
               {filtered.length} product{filtered.length !== 1 ? "s" : ""} found
             </p>
           </div>
@@ -151,12 +151,12 @@ export default function Shop() {
         {/* Search + sort bar */}
         <div className="flex items-center gap-3 mb-8">
           <div className="relative flex-1">
-            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--ma-muted)]" />
             <input
               value={search}
               onChange={e => setSearch(e.target.value)}
               placeholder="Search products..."
-              className="w-full bg-[#10151D] border border-white/10 rounded-xl pl-9 pr-4 py-2.5 text-sm text-white placeholder-gray-500 outline-none focus:border-[#2B8EF0]/40 transition-colors"
+              className="w-full bg-[var(--ma-card)] border border-[var(--ma-border)] rounded-xl pl-9 pr-4 py-2.5 text-sm text-[var(--ma-foreground)] placeholder-gray-500 outline-none focus:border-[#2B8EF0]/40 transition-colors"
             />
           </div>
 
@@ -164,18 +164,18 @@ export default function Shop() {
             <select
               value={sort}
               onChange={e => setSort(e.target.value)}
-              className="appearance-none bg-[#10151D] border border-white/10 rounded-xl px-4 py-2.5 pr-8 text-sm text-white outline-none focus:border-[#2B8EF0]/40 transition-colors cursor-pointer"
+              className="appearance-none bg-[var(--ma-card)] border border-[var(--ma-border)] rounded-xl px-4 py-2.5 pr-8 text-sm text-[var(--ma-foreground)] outline-none focus:border-[#2B8EF0]/40 transition-colors cursor-pointer"
             >
               {SORT_OPTIONS.map(o => (
                 <option key={o.value} value={o.value}>{o.label}</option>
               ))}
             </select>
-            <ChevronDown size={14} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" />
+            <ChevronDown size={14} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[var(--ma-muted)] pointer-events-none" />
           </div>
 
           <button
             onClick={() => setFilterOpen(true)}
-            className="lg:hidden flex items-center gap-2 px-4 py-2.5 bg-[#10151D] border border-white/10 rounded-xl text-sm text-gray-400 hover:text-white transition-colors"
+            className="lg:hidden flex items-center gap-2 px-4 py-2.5 bg-[var(--ma-card)] border border-[var(--ma-border)] rounded-xl text-sm text-[var(--ma-muted)] hover:text-[var(--ma-foreground)] transition-colors"
           >
             <SlidersHorizontal size={15} />
             Filters
@@ -194,11 +194,11 @@ export default function Shop() {
           <div className="flex-1">
             {filtered.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-24 text-center">
-                <div className="w-16 h-16 rounded-2xl bg-[#10151D] flex items-center justify-center mb-4">
-                  <Search size={24} className="text-gray-600" />
+                <div className="w-16 h-16 rounded-2xl bg-[var(--ma-card)] flex items-center justify-center mb-4">
+                  <Search size={24} className="text-[var(--ma-muted)]" />
                 </div>
-                <p className="text-white font-semibold mb-2">No products found</p>
-                <p className="text-sm text-gray-500 mb-4">Try adjusting your search or filters</p>
+                <p className="text-[var(--ma-foreground)] font-semibold mb-2">No products found</p>
+                <p className="text-sm text-[var(--ma-muted)] mb-4">Try adjusting your search or filters</p>
                 <button onClick={clearFilters} className="text-sm text-[#2B8EF0] hover:underline">Clear all filters</button>
               </div>
             ) : (
@@ -230,11 +230,11 @@ export default function Shop() {
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "tween", duration: 0.3 }}
-              className="fixed left-0 top-0 bottom-0 w-72 bg-[#0A0F16] border-r border-white/5 z-50 overflow-y-auto p-6 admin-scroll"
+              className="fixed left-0 top-0 bottom-0 w-72 bg-[var(--ma-surface)] border-r border-[var(--ma-border)] z-50 overflow-y-auto p-6 admin-scroll"
             >
               <div className="flex items-center justify-between mb-6">
-                <h3 className="font-semibold text-white">Filters</h3>
-                <button onClick={() => setFilterOpen(false)} className="text-gray-500 hover:text-white"><X size={18} /></button>
+                <h3 className="font-semibold text-[var(--ma-foreground)]">Filters</h3>
+                <button onClick={() => setFilterOpen(false)} className="text-[var(--ma-muted)] hover:text-[var(--ma-foreground)]"><X size={18} /></button>
               </div>
               <Filters />
             </motion.div>

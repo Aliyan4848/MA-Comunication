@@ -141,17 +141,17 @@ export default function AdminProductForm() {
     setFeatureInput("")
   }
 
-  const inputClass = "w-full bg-[#0A0F16] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-gray-600 outline-none focus:border-[#2B8EF0]/50 transition-colors"
+  const inputClass = "w-full bg-[var(--ma-surface)] border border-[var(--ma-border)] rounded-xl px-4 py-2.5 text-sm text-[var(--ma-foreground)] placeholder-[var(--ma-muted)] outline-none focus:border-[#2B8EF0]/50 transition-colors"
 
   return (
     <div>
       <div className="flex items-center gap-4 mb-8">
-        <button onClick={() => navigate("/admin/products")} className="text-gray-500 hover:text-white transition-colors">
+        <button onClick={() => navigate("/admin/products")} className="text-[var(--ma-muted)] hover:text-[var(--ma-foreground)] transition-colors">
           <ArrowLeft size={18} />
         </button>
         <div className="flex-1">
-          <h1 className="text-xl font-bold text-white">{isNew ? "Add New Product" : "Edit Product"}</h1>
-          {!isNew && <p className="text-gray-500 text-xs mt-0.5">ID: {form.id}</p>}
+          <h1 className="text-xl font-bold text-[var(--ma-foreground)]">{isNew ? "Add New Product" : "Edit Product"}</h1>
+          {!isNew && <p className="text-[var(--ma-muted)] text-xs mt-0.5">ID: {form.id}</p>}
         </div>
         <button onClick={handleSave} disabled={saving} className="flex items-center gap-2 px-5 py-2.5 bg-[#2B8EF0] hover:bg-[#1A7DE0] text-white font-semibold rounded-xl transition-all text-sm disabled:opacity-50">
           <Save size={15} /> {saving ? "Saving..." : "Save Product"}
@@ -217,7 +217,7 @@ export default function AdminProductForm() {
           {/* Images */}
           <Section title="Product Images">
             <div>
-              <label className="flex items-center justify-center gap-2 px-4 py-3 border border-dashed border-white/15 rounded-xl text-sm text-gray-400 hover:border-[#2B8EF0]/40 hover:text-[#2B8EF0] cursor-pointer transition-colors">
+              <label className="flex items-center justify-center gap-2 px-4 py-3 border border-dashed border-white/15 rounded-xl text-sm text-[var(--ma-muted)] hover:border-[#2B8EF0]/40 hover:text-[#2B8EF0] cursor-pointer transition-colors">
                 <Image size={15} />
                 {uploading ? "Uploading..." : "Upload image(s) from your device"}
                 <input
@@ -236,12 +236,12 @@ export default function AdminProductForm() {
                 <Plus size={14} /> Add
               </button>
             </div>
-            <p className="text-xs text-gray-600 mt-1">Uploads are stored in Supabase Storage. First image is the main image — drag isn't wired up yet, so remove and re-add to reorder.</p>
+            <p className="text-xs text-[var(--ma-muted)] mt-1">Uploads are stored in Supabase Storage. First image is the main image — drag isn't wired up yet, so remove and re-add to reorder.</p>
             {form.images.length > 0 && (
               <div className="flex flex-wrap gap-3 mt-3">
                 {form.images.map((img, i) => (
                   <div key={img.id} className="relative group">
-                    <img src={img.url} alt={img.alt} className="w-20 h-20 rounded-xl object-cover bg-[#0A0F16] border border-white/10" />
+                    <img src={img.url} alt={img.alt} className="w-20 h-20 rounded-xl object-cover bg-[var(--ma-surface)] border border-[var(--ma-border)]" />
                     {i === 0 && <span className="absolute -top-1 -left-1 text-[10px] bg-[#2B8EF0] text-white px-1.5 py-0.5 rounded-full font-bold">Main</span>}
                     <button onClick={() => removeImage(img.id)} className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                       <Trash2 size={10} />
@@ -274,10 +274,10 @@ export default function AdminProductForm() {
             {Object.entries(form.specifications).length > 0 && (
               <div className="mt-3 space-y-2">
                 {Object.entries(form.specifications).map(([k, v]) => (
-                  <div key={k} className="flex items-center gap-3 bg-[#0A0F16] rounded-xl px-4 py-2.5">
-                    <span className="text-xs font-semibold text-gray-400 w-28 shrink-0">{k}</span>
-                    <span className="text-xs text-gray-300 flex-1">{v}</span>
-                    <button onClick={() => removeSpec(k)} className="text-gray-600 hover:text-red-400 transition-colors"><Trash2 size={12} /></button>
+                  <div key={k} className="flex items-center gap-3 bg-[var(--ma-surface)] rounded-xl px-4 py-2.5">
+                    <span className="text-xs font-semibold text-[var(--ma-muted)] w-28 shrink-0">{k}</span>
+                    <span className="text-xs text-[var(--ma-foreground)] flex-1">{v}</span>
+                    <button onClick={() => removeSpec(k)} className="text-[var(--ma-muted)] hover:text-red-400 transition-colors"><Trash2 size={12} /></button>
                   </div>
                 ))}
               </div>
@@ -295,10 +295,10 @@ export default function AdminProductForm() {
             {form.features.length > 0 && (
               <div className="mt-3 space-y-2">
                 {form.features.map((f, i) => (
-                  <div key={i} className="flex items-center gap-3 bg-[#0A0F16] rounded-xl px-4 py-2.5">
+                  <div key={i} className="flex items-center gap-3 bg-[var(--ma-surface)] rounded-xl px-4 py-2.5">
                     <span className="text-[#2B8EF0] text-xs shrink-0">✓</span>
-                    <span className="text-xs text-gray-300 flex-1">{f}</span>
-                    <button onClick={() => set("features", form.features.filter((_, j) => j !== i))} className="text-gray-600 hover:text-red-400 transition-colors"><Trash2 size={12} /></button>
+                    <span className="text-xs text-[var(--ma-foreground)] flex-1">{f}</span>
+                    <button onClick={() => set("features", form.features.filter((_, j) => j !== i))} className="text-[var(--ma-muted)] hover:text-red-400 transition-colors"><Trash2 size={12} /></button>
                   </div>
                 ))}
               </div>
@@ -319,10 +319,10 @@ export default function AdminProductForm() {
 
           {/* Preview */}
           {form.images.length > 0 && (
-            <div className="rounded-xl bg-[#10151D] border border-white/5 p-4">
-              <p className="text-xs text-gray-500 mb-3 font-medium uppercase tracking-wide">Preview</p>
-              <img src={form.images[0].url} alt={form.name} className="w-full aspect-square rounded-xl object-cover bg-[#0A0F16]" />
-              <p className="text-sm font-medium text-white mt-3 line-clamp-2">{form.name || "Product name"}</p>
+            <div className="rounded-xl bg-[var(--ma-card)] border border-[var(--ma-border)] p-4">
+              <p className="text-xs text-[var(--ma-muted)] mb-3 font-medium uppercase tracking-wide">Preview</p>
+              <img src={form.images[0].url} alt={form.name} className="w-full aspect-square rounded-xl object-cover bg-[var(--ma-surface)]" />
+              <p className="text-sm font-medium text-[var(--ma-foreground)] mt-3 line-clamp-2">{form.name || "Product name"}</p>
               <p className="text-sm text-[#2B8EF0] font-bold mt-1">
                 {form.salePrice ? `Rs. ${form.salePrice.toLocaleString()}` : form.price ? `Rs. ${form.price.toLocaleString()}` : "—"}
               </p>
@@ -336,8 +336,8 @@ export default function AdminProductForm() {
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-xl bg-[#10151D] border border-white/5 p-5">
-      <h3 className="text-sm font-semibold text-white mb-4">{title}</h3>
+    <div className="rounded-xl bg-[var(--ma-card)] border border-[var(--ma-border)] p-5">
+      <h3 className="text-sm font-semibold text-[var(--ma-foreground)] mb-4">{title}</h3>
       <div className="space-y-4">{children}</div>
     </div>
   )
@@ -346,7 +346,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <label className="block text-xs text-gray-500 mb-1.5">{label}</label>
+      <label className="block text-xs text-[var(--ma-muted)] mb-1.5">{label}</label>
       {children}
     </div>
   )
@@ -356,12 +356,12 @@ function Toggle({ label, desc, checked, onChange }: { label: string; desc: strin
   return (
     <div className="flex items-center justify-between">
       <div>
-        <p className="text-sm text-white">{label}</p>
-        <p className="text-xs text-gray-600">{desc}</p>
+        <p className="text-sm text-[var(--ma-foreground)]">{label}</p>
+        <p className="text-xs text-[var(--ma-muted)]">{desc}</p>
       </div>
       <button
         onClick={() => onChange(!checked)}
-        className={`w-10 h-5.5 rounded-full transition-colors relative flex-shrink-0 ${checked ? "bg-[#2B8EF0]" : "bg-white/10"}`}
+        className={`w-10 h-5.5 rounded-full transition-colors relative flex-shrink-0 ${checked ? "bg-[#2B8EF0]" : "bg-[var(--ma-dim)]"}`}
         style={{ height: "22px", width: "40px" }}
       >
         <span className={`absolute top-0.5 w-4 h-4 rounded-full bg-white transition-all ${checked ? "left-5" : "left-0.5"}`} style={{ width: "18px", height: "18px" }} />

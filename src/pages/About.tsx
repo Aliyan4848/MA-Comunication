@@ -11,10 +11,10 @@ export default function About() {
         <div className="relative max-w-3xl mx-auto text-center">
           <ScrollReveal>
             <p className="text-xs font-semibold text-[#2B8EF0] uppercase tracking-widest mb-4">About Us</p>
-            <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight">
+            <h1 className="text-4xl sm:text-5xl font-bold text-[var(--ma-foreground)] mb-6 leading-tight">
               Mobile accessories,<br />reimagined for Pakistan.
             </h1>
-            <p className="text-gray-400 text-lg leading-relaxed">
+            <p className="text-[var(--ma-muted)] text-lg leading-relaxed">
               MA Communication is a modern mobile accessories brand dedicated to bringing premium-quality technology products to customers across Pakistan. We curate a carefully selected range of chargers, cables, earbuds, power banks, smartwatches, and gadgets — all designed to complement your digital lifestyle.
             </p>
           </ScrollReveal>
@@ -22,10 +22,10 @@ export default function About() {
       </div>
 
       {/* Values */}
-      <div className="py-20 px-4 sm:px-6 bg-[#0A0F16] border-y border-white/5">
+      <div className="py-20 px-4 sm:px-6 bg-[var(--ma-surface)] border-y border-[var(--ma-border)]">
         <div className="max-w-5xl mx-auto">
           <ScrollReveal>
-            <h2 className="text-2xl font-bold text-white text-center mb-12">What We Stand For</h2>
+            <h2 className="text-2xl font-bold text-[var(--ma-foreground)] text-center mb-12">What We Stand For</h2>
           </ScrollReveal>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
@@ -35,12 +35,12 @@ export default function About() {
               { icon: Users, title: "Customer First", desc: "We take care of our customers before, during and after every purchase." },
             ].map((item, i) => (
               <ScrollReveal key={item.title} delay={i * 0.1}>
-                <div className="rounded-xl bg-[#10151D] border border-white/5 p-6 text-center">
+                <div className="rounded-xl bg-[var(--ma-card)] border border-[var(--ma-border)] p-6 text-center">
                   <div className="w-12 h-12 rounded-xl bg-[#2B8EF0]/10 flex items-center justify-center mx-auto mb-4">
                     <item.icon size={20} className="text-[#2B8EF0]" />
                   </div>
-                  <h3 className="text-sm font-semibold text-white mb-2">{item.title}</h3>
-                  <p className="text-xs text-gray-500 leading-relaxed">{item.desc}</p>
+                  <h3 className="text-sm font-semibold text-[var(--ma-foreground)] mb-2">{item.title}</h3>
+                  <p className="text-xs text-[var(--ma-muted)] leading-relaxed">{item.desc}</p>
                 </div>
               </ScrollReveal>
             ))}
@@ -52,8 +52,8 @@ export default function About() {
       <div className="py-20 px-4 sm:px-6">
         <div className="max-w-3xl mx-auto">
           <ScrollReveal>
-            <h2 className="text-2xl font-bold text-white mb-6">Our Story</h2>
-            <div className="space-y-4 text-gray-400 text-sm leading-relaxed">
+            <h2 className="text-2xl font-bold text-[var(--ma-foreground)] mb-6">Our Story</h2>
+            <div className="space-y-4 text-[var(--ma-muted)] text-sm leading-relaxed">
               <p>
                 MA Communication started with a simple observation: finding reliable, affordable mobile accessories in Pakistan was harder than it should be. Too many options, too little quality assurance, and no single trusted destination.
               </p>
@@ -72,8 +72,8 @@ export default function About() {
       <div className="py-16 px-4 sm:px-6">
         <div className="max-w-2xl mx-auto text-center">
           <ScrollReveal>
-            <h2 className="text-2xl font-bold text-white mb-4">Ready to explore?</h2>
-            <p className="text-gray-500 mb-6 text-sm">Discover our full range of premium mobile accessories.</p>
+            <h2 className="text-2xl font-bold text-[var(--ma-foreground)] mb-4">Ready to explore?</h2>
+            <p className="text-[var(--ma-muted)] mb-6 text-sm">Discover our full range of premium mobile accessories.</p>
             <Link to="/shop" className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#2B8EF0] hover:bg-[#1A7DE0] text-white font-semibold rounded-xl transition-all hover:shadow-lg hover:shadow-[#2B8EF0]/25">
               Shop Now
             </Link>

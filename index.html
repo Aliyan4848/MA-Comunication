@@ -9,10 +9,11 @@
     <script>
       (function () {
         try {
-          var stored = localStorage.getItem('ma-theme');
-          var theme = stored === 'light' || stored === 'dark'
-            ? stored
-            : (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+          var isAdmin = window.location.pathname.indexOf('/admin') === 0;
+          var key = isAdmin ? 'ma-theme-admin' : 'ma-theme';
+          var stored = localStorage.getItem(key);
+          var prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+          var theme = stored === 'light' || stored === 'dark' ? stored : (prefersLight ? 'light' : 'dark');
           document.documentElement.setAttribute('data-theme', theme);
         } catch (e) {
           document.documentElement.setAttribute('data-theme', 'dark');

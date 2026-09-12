@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useStore } from "../../contexts/StoreContext"
 import { useAuth } from "../../contexts/AuthContext"
 import { useToast } from "../../contexts/ToastContext"
+import ThemeSelector from "../../components/ui/ThemeSelector"
 
 export default function AccountProfile() {
   const { fetchMyProfile, updateMyProfile } = useStore()
@@ -67,11 +68,16 @@ export default function AccountProfile() {
       </div>
 
       <div className="bg-[var(--ma-card)] border border-[var(--ma-border)] rounded-2xl p-5">
+        <h2 className="text-sm font-semibold text-[var(--ma-foreground)] mb-4">Appearance</h2>
+        <ThemeSelector />
+      </div>
+
+      <div className="bg-[var(--ma-card)] border border-[var(--ma-border)] rounded-2xl p-5">
         <h2 className="text-sm font-semibold text-[var(--ma-foreground)] mb-4">Change Password</h2>
         <div className="flex gap-2">
           <input type="password" placeholder="New password" value={newPassword} onChange={e => setNewPassword(e.target.value)}
             className="flex-1 bg-[var(--ma-surface)] border border-[var(--ma-border)] rounded-xl px-3 py-2 text-sm text-[var(--ma-foreground)] outline-none focus:border-[#2B8EF0]/50" />
-          <button onClick={changePassword} disabled={passSaving || !newPassword} className="px-4 py-2 bg-white/5 hover:bg-white/10 border border-[var(--ma-border)] text-[var(--ma-foreground)] text-sm rounded-xl disabled:opacity-50 transition-all shrink-0">
+          <button onClick={changePassword} disabled={passSaving || !newPassword} className="px-4 py-2 bg-white/5 hover:bg-[var(--ma-card-hover)] border border-[var(--ma-border)] text-[var(--ma-foreground)] text-sm rounded-xl disabled:opacity-50 transition-all shrink-0">
             {passSaving ? "..." : "Update"}
           </button>
         </div>

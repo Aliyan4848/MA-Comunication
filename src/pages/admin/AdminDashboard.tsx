@@ -60,9 +60,9 @@ export default function AdminDashboard() {
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (!active || !payload?.length) return null
     return (
-      <div className="bg-[#10151D] border border-white/10 rounded-xl px-3 py-2 text-xs">
-        <p className="text-gray-400">{label}</p>
-        <p className="text-white font-semibold">{payload[0].value} orders</p>
+      <div className="bg-[var(--ma-card)] border border-[var(--ma-border)] rounded-xl px-3 py-2 text-xs">
+        <p className="text-[var(--ma-muted)]">{label}</p>
+        <p className="text-[var(--ma-foreground)] font-semibold">{payload[0].value} orders</p>
       </div>
     )
   }
@@ -70,29 +70,29 @@ export default function AdminDashboard() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-xl font-bold text-white">Dashboard</h1>
-        <p className="text-gray-500 text-sm mt-1">MA Communication — Admin Overview</p>
+        <h1 className="text-xl font-bold text-[var(--ma-foreground)]">Dashboard</h1>
+        <p className="text-[var(--ma-muted)] text-sm mt-1">MA Communication — Admin Overview</p>
       </div>
 
       {/* Stat cards */}
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
         {statCards.map(s => (
-          <div key={s.label} className="rounded-xl bg-[#10151D] border border-white/5 p-5">
+          <div key={s.label} className="rounded-xl bg-[var(--ma-card)] border border-[var(--ma-border)] p-5">
             <div className="flex items-center justify-between mb-3">
-              <p className="text-xs text-gray-500">{s.label}</p>
+              <p className="text-xs text-[var(--ma-muted)]">{s.label}</p>
               <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: s.color + "20" }}>
                 <s.icon size={15} style={{ color: s.color }} />
               </div>
             </div>
-            <p className="text-xl font-bold text-white">{s.value}</p>
+            <p className="text-xl font-bold text-[var(--ma-foreground)]">{s.value}</p>
           </div>
         ))}
       </div>
 
       {/* Charts */}
       <div className="grid lg:grid-cols-2 gap-6">
-        <div className="rounded-xl bg-[#10151D] border border-white/5 p-5">
-          <p className="text-sm font-semibold text-white mb-5">Orders — Last 7 Days</p>
+        <div className="rounded-xl bg-[var(--ma-card)] border border-[var(--ma-border)] p-5">
+          <p className="text-sm font-semibold text-[var(--ma-foreground)] mb-5">Orders — Last 7 Days</p>
           <ResponsiveContainer width="100%" height={180}>
             <BarChart data={orderChart} barSize={24}>
               <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{ fill: "#6B7280", fontSize: 11 }} />
@@ -103,10 +103,10 @@ export default function AdminDashboard() {
           </ResponsiveContainer>
         </div>
 
-        <div className="rounded-xl bg-[#10151D] border border-white/5 p-5">
-          <p className="text-sm font-semibold text-white mb-5">Products by Category</p>
+        <div className="rounded-xl bg-[var(--ma-card)] border border-[var(--ma-border)] p-5">
+          <p className="text-sm font-semibold text-[var(--ma-foreground)] mb-5">Products by Category</p>
           {catChart.length === 0 ? (
-            <div className="flex items-center justify-center h-44 text-gray-600 text-sm">No data yet</div>
+            <div className="flex items-center justify-center h-44 text-[var(--ma-muted)] text-sm">No data yet</div>
           ) : (
             <ResponsiveContainer width="100%" height={180}>
               <PieChart>
@@ -116,9 +116,9 @@ export default function AdminDashboard() {
                   ))}
                 </Pie>
                 <Tooltip content={({ active, payload }) => active && payload?.length ? (
-                  <div className="bg-[#10151D] border border-white/10 rounded-xl px-3 py-2 text-xs">
-                    <p className="text-gray-400">{payload[0].name}</p>
-                    <p className="text-white font-semibold">{payload[0].value} products</p>
+                  <div className="bg-[var(--ma-card)] border border-[var(--ma-border)] rounded-xl px-3 py-2 text-xs">
+                    <p className="text-[var(--ma-muted)]">{payload[0].name}</p>
+                    <p className="text-[var(--ma-foreground)] font-semibold">{payload[0].value} products</p>
                   </div>
                 ) : null} />
               </PieChart>
@@ -126,7 +126,7 @@ export default function AdminDashboard() {
           )}
           <div className="flex flex-wrap gap-3 mt-3 justify-center">
             {catChart.slice(0, 6).map((c, i) => (
-              <div key={c.name} className="flex items-center gap-1.5 text-xs text-gray-500">
+              <div key={c.name} className="flex items-center gap-1.5 text-xs text-[var(--ma-muted)]">
                 <span className="w-2 h-2 rounded-full" style={{ background: COLORS[i % COLORS.length] }} />
                 {c.name}
               </div>
@@ -135,15 +135,15 @@ export default function AdminDashboard() {
         </div>
 
         {/* Recent orders */}
-        <div className="lg:col-span-2 rounded-xl bg-[#10151D] border border-white/5 p-5">
-          <p className="text-sm font-semibold text-white mb-5">Recent Orders</p>
+        <div className="lg:col-span-2 rounded-xl bg-[var(--ma-card)] border border-[var(--ma-border)] p-5">
+          <p className="text-sm font-semibold text-[var(--ma-foreground)] mb-5">Recent Orders</p>
           {orders.length === 0 ? (
-            <p className="text-gray-600 text-sm text-center py-8">No orders yet</p>
+            <p className="text-[var(--ma-muted)] text-sm text-center py-8">No orders yet</p>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="text-xs text-gray-600 uppercase border-b border-white/5">
+                  <tr className="text-xs text-[var(--ma-muted)] uppercase border-b border-[var(--ma-border)]">
                     <th className="text-left pb-3 font-medium">Order ID</th>
                     <th className="text-left pb-3 font-medium">Customer</th>
                     <th className="text-left pb-3 font-medium hidden sm:table-cell">Date</th>
@@ -153,11 +153,11 @@ export default function AdminDashboard() {
                 </thead>
                 <tbody>
                   {orders.slice(0, 8).map(o => (
-                    <tr key={o.id} className="border-b border-white/5 last:border-0">
+                    <tr key={o.id} className="border-b border-[var(--ma-border)] last:border-0">
                       <td className="py-3 font-mono text-xs text-[#2B8EF0]">{o.id}</td>
-                      <td className="py-3 text-white">{o.customerName}</td>
-                      <td className="py-3 text-gray-500 hidden sm:table-cell">{new Date(o.createdAt).toLocaleDateString()}</td>
-                      <td className="py-3 text-white font-medium">{fmt(o.total)}</td>
+                      <td className="py-3 text-[var(--ma-foreground)]">{o.customerName}</td>
+                      <td className="py-3 text-[var(--ma-muted)] hidden sm:table-cell">{new Date(o.createdAt).toLocaleDateString()}</td>
+                      <td className="py-3 text-[var(--ma-foreground)] font-medium">{fmt(o.total)}</td>
                       <td className="py-3">
                         <StatusBadge status={o.status} />
                       </td>
@@ -186,7 +186,7 @@ export function StatusBadge({ status }: { status: string }) {
   }
   const label = status.split("_").map(w => w[0].toUpperCase() + w.slice(1)).join(" ")
   return (
-    <span className={`text-xs px-2 py-0.5 rounded-full border ${styles[status] || "bg-gray-500/10 text-gray-400 border-gray-500/20"}`}>
+    <span className={`text-xs px-2 py-0.5 rounded-full border ${styles[status] || "bg-gray-500/10 text-[var(--ma-muted)] border-gray-500/20"}`}>
       {label}
     </span>
   )

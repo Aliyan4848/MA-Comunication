@@ -52,7 +52,7 @@ export default function AdminOrderDetail() {
   if (!order) {
     return (
       <div className="text-center py-20">
-        <p className="text-gray-500">Order not found</p>
+        <p className="text-[var(--ma-muted)]">Order not found</p>
         <button onClick={() => navigate("/admin/orders")} className="text-[#2B8EF0] hover:underline text-sm mt-2">Back to orders</button>
       </div>
     )
@@ -89,19 +89,19 @@ export default function AdminOrderDetail() {
   return (
     <div>
       <div className="flex items-center gap-4 mb-8">
-        <button onClick={() => navigate("/admin/orders")} className="text-gray-500 hover:text-white"><ArrowLeft size={18} /></button>
+        <button onClick={() => navigate("/admin/orders")} className="text-[var(--ma-muted)] hover:text-[var(--ma-foreground)]"><ArrowLeft size={18} /></button>
         <div className="flex-1">
-          <h1 className="text-xl font-bold text-white">{order.orderNumber}</h1>
-          <p className="text-gray-500 text-xs mt-0.5">{new Date(order.createdAt).toLocaleString()}</p>
+          <h1 className="text-xl font-bold text-[var(--ma-foreground)]">{order.orderNumber}</h1>
+          <p className="text-[var(--ma-muted)] text-xs mt-0.5">{new Date(order.createdAt).toLocaleString()}</p>
         </div>
         <StatusBadge status={order.status} />
       </div>
 
       {/* Status actions — only valid next steps are offered, mirroring the DB state machine */}
-      <div className="rounded-xl bg-[#10151D] border border-white/5 p-5 mb-6">
-        <h3 className="text-sm font-semibold text-white mb-4">Order Timeline</h3>
+      <div className="rounded-xl bg-[var(--ma-card)] border border-[var(--ma-border)] p-5 mb-6">
+        <h3 className="text-sm font-semibold text-[var(--ma-foreground)] mb-4">Order Timeline</h3>
         <OrderTimeline status={order.status} history={history} trackingEvents={trackingEvents} />
-        <div className="flex flex-wrap gap-2 mt-5 pt-5 border-t border-white/5">
+        <div className="flex flex-wrap gap-2 mt-5 pt-5 border-t border-[var(--ma-border)]">
           {nextStatus && (
             <button onClick={() => advance(nextStatus)} disabled={busy} className="px-4 py-2 bg-[#2B8EF0] hover:bg-[#1A7DE0] text-white text-sm font-medium rounded-xl disabled:opacity-50 transition-all">
               Mark as {LABELS[nextStatus]}
@@ -112,27 +112,27 @@ export default function AdminOrderDetail() {
               Cancel Order
             </button>
           )}
-          {!nextStatus && !canCancel && <p className="text-xs text-gray-500">This order has reached a final state.</p>}
+          {!nextStatus && !canCancel && <p className="text-xs text-[var(--ma-muted)]">This order has reached a final state.</p>}
         </div>
       </div>
 
       {/* Shipment */}
-      <div className="rounded-xl bg-[#10151D] border border-white/5 p-5 mb-6">
-        <h3 className="text-sm font-semibold text-white mb-1 flex items-center gap-2"><Truck size={15} /> Shipment</h3>
-        <p className="text-xs text-gray-500 mb-4">
+      <div className="rounded-xl bg-[var(--ma-card)] border border-[var(--ma-border)] p-5 mb-6">
+        <h3 className="text-sm font-semibold text-[var(--ma-foreground)] mb-1 flex items-center gap-2"><Truck size={15} /> Shipment</h3>
+        <p className="text-xs text-[var(--ma-muted)] mb-4">
           Enter the courier and tracking number once — after that, status moves forward automatically as the courier updates it (once a live courier integration is connected). No live courier API is connected yet, so status changes above are still manual.
         </p>
         <div className="flex flex-wrap gap-2">
-          <input value={courier} onChange={e => setCourier(e.target.value)} placeholder="Courier (e.g. TCS, Leopards)" className="flex-1 min-w-[160px] bg-[#0A0F16] border border-white/10 rounded-xl px-3 py-2 text-sm text-white outline-none" />
-          <input value={trackingNumber} onChange={e => setTrackingNumber(e.target.value)} placeholder="Tracking number" className="flex-1 min-w-[160px] bg-[#0A0F16] border border-white/10 rounded-xl px-3 py-2 text-sm text-white outline-none" />
-          <button onClick={saveShipment} disabled={busy} className="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white text-sm rounded-xl disabled:opacity-50 transition-all">Save</button>
+          <input value={courier} onChange={e => setCourier(e.target.value)} placeholder="Courier (e.g. TCS, Leopards)" className="flex-1 min-w-[160px] bg-[var(--ma-surface)] border border-[var(--ma-border)] rounded-xl px-3 py-2 text-sm text-[var(--ma-foreground)] outline-none" />
+          <input value={trackingNumber} onChange={e => setTrackingNumber(e.target.value)} placeholder="Tracking number" className="flex-1 min-w-[160px] bg-[var(--ma-surface)] border border-[var(--ma-border)] rounded-xl px-3 py-2 text-sm text-[var(--ma-foreground)] outline-none" />
+          <button onClick={saveShipment} disabled={busy} className="px-4 py-2 bg-white/5 hover:bg-[var(--ma-card-hover)] border border-[var(--ma-border)] text-[var(--ma-foreground)] text-sm rounded-xl disabled:opacity-50 transition-all">Save</button>
         </div>
       </div>
 
       <div className="grid lg:grid-cols-2 gap-6">
         {/* Customer */}
-        <div className="rounded-xl bg-[#10151D] border border-white/5 p-5">
-          <h3 className="text-sm font-semibold text-white mb-4">Customer Information</h3>
+        <div className="rounded-xl bg-[var(--ma-card)] border border-[var(--ma-border)] p-5">
+          <h3 className="text-sm font-semibold text-[var(--ma-foreground)] mb-4">Customer Information</h3>
           <div className="space-y-3 text-sm">
             <Row label="Name" value={order.customerName} />
             <Row label="Phone" value={order.phone} />
@@ -144,27 +144,27 @@ export default function AdminOrderDetail() {
         </div>
 
         {/* Order summary */}
-        <div className="rounded-xl bg-[#10151D] border border-white/5 p-5">
-          <h3 className="text-sm font-semibold text-white mb-4">Order Summary</h3>
+        <div className="rounded-xl bg-[var(--ma-card)] border border-[var(--ma-border)] p-5">
+          <h3 className="text-sm font-semibold text-[var(--ma-foreground)] mb-4">Order Summary</h3>
           <div className="space-y-3 mb-5">
             {order.items.map((item, i) => (
               <div key={i} className="flex gap-3">
-                <img src={item.image} alt={item.name} className="w-12 h-12 rounded-lg object-cover bg-[#0A0F16] shrink-0" />
+                <img src={item.image} alt={item.name} className="w-12 h-12 rounded-lg object-cover bg-[var(--ma-surface)] shrink-0" />
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm text-white leading-snug line-clamp-2">{item.name}</p>
-                  <p className="text-xs text-gray-500 mt-0.5">Qty: {item.quantity} × {fmt(item.price)}</p>
+                  <p className="text-sm text-[var(--ma-foreground)] leading-snug line-clamp-2">{item.name}</p>
+                  <p className="text-xs text-[var(--ma-muted)] mt-0.5">Qty: {item.quantity} × {fmt(item.price)}</p>
                 </div>
-                <p className="text-sm font-semibold text-white shrink-0">{fmt(item.price * item.quantity)}</p>
+                <p className="text-sm font-semibold text-[var(--ma-foreground)] shrink-0">{fmt(item.price * item.quantity)}</p>
               </div>
             ))}
           </div>
-          <div className="border-t border-white/5 pt-4 space-y-2 text-sm">
-            <div className="flex justify-between text-gray-400"><span>Subtotal</span><span>{fmt(order.subtotal)}</span></div>
-            <div className="flex justify-between text-gray-400"><span>Delivery</span><span>{fmt(order.deliveryCharge)}</span></div>
-            <div className="flex justify-between font-bold text-white text-base pt-1"><span>Total</span><span>{fmt(order.total)}</span></div>
+          <div className="border-t border-[var(--ma-border)] pt-4 space-y-2 text-sm">
+            <div className="flex justify-between text-[var(--ma-muted)]"><span>Subtotal</span><span>{fmt(order.subtotal)}</span></div>
+            <div className="flex justify-between text-[var(--ma-muted)]"><span>Delivery</span><span>{fmt(order.deliveryCharge)}</span></div>
+            <div className="flex justify-between font-bold text-[var(--ma-foreground)] text-base pt-1"><span>Total</span><span>{fmt(order.total)}</span></div>
           </div>
-          <div className="mt-4 bg-[#0A0F16] rounded-xl px-4 py-3 text-xs text-gray-500">
-            Payment: <span className="text-white">{order.paymentMethod}</span>
+          <div className="mt-4 bg-[var(--ma-surface)] rounded-xl px-4 py-3 text-xs text-[var(--ma-muted)]">
+            Payment: <span className="text-[var(--ma-foreground)]">{order.paymentMethod}</span>
           </div>
         </div>
       </div>
@@ -175,8 +175,8 @@ export default function AdminOrderDetail() {
 function Row({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex gap-4">
-      <span className="text-gray-500 w-20 shrink-0 text-xs">{label}</span>
-      <span className="text-white text-sm">{value}</span>
+      <span className="text-[var(--ma-muted)] w-20 shrink-0 text-xs">{label}</span>
+      <span className="text-[var(--ma-foreground)] text-sm">{value}</span>
     </div>
   )
 }

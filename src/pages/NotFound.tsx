@@ -14,9 +14,9 @@ export default function NotFound() {
         <div className="w-20 h-20 rounded-2xl bg-[#2B8EF0]/10 border border-[#2B8EF0]/20 flex items-center justify-center mx-auto mb-8">
           <Zap size={32} className="text-[#2B8EF0]" />
         </div>
-        <p className="text-8xl font-black text-white/5 mb-4 leading-none select-none">404</p>
-        <h1 className="text-2xl font-bold text-white mb-3">Page Not Found</h1>
-        <p className="text-gray-500 text-sm mb-8 leading-relaxed">
+        <p className="text-8xl font-black text-[var(--ma-foreground)]/5 mb-4 leading-none select-none">404</p>
+        <h1 className="text-2xl font-bold text-[var(--ma-foreground)] mb-3">Page Not Found</h1>
+        <p className="text-[var(--ma-muted)] text-sm mb-8 leading-relaxed">
           The page you're looking for doesn't exist or has been moved.
         </p>
         <div className="flex gap-3 justify-center">
@@ -28,7 +28,7 @@ export default function NotFound() {
           </Link>
           <Link
             to="/shop"
-            className="inline-flex items-center gap-2 px-5 py-3 border border-white/10 hover:border-white/20 text-gray-400 hover:text-white font-semibold rounded-xl transition-all text-sm"
+            className="inline-flex items-center gap-2 px-5 py-3 border border-[var(--ma-border)] hover:border-[var(--ma-border-hover)] text-[var(--ma-muted)] hover:text-[var(--ma-foreground)] font-semibold rounded-xl transition-all text-sm"
           >
             Browse Shop
           </Link>

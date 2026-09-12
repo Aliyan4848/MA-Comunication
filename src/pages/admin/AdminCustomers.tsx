@@ -57,20 +57,20 @@ export default function AdminCustomers() {
     <div>
       <div className="flex items-center gap-2 mb-6">
         <Users size={18} className="text-[#2B8EF0]" />
-        <h1 className="text-lg font-bold text-white">Customers</h1>
-        <span className="text-xs text-gray-500">({customers.length})</span>
+        <h1 className="text-lg font-bold text-[var(--ma-foreground)]">Customers</h1>
+        <span className="text-xs text-[var(--ma-muted)]">({customers.length})</span>
       </div>
 
       {error && <p className="text-red-400 text-sm mb-4">{error}</p>}
       {loading ? (
-        <p className="text-gray-500 text-sm">Loading...</p>
+        <p className="text-[var(--ma-muted)] text-sm">Loading...</p>
       ) : customers.length === 0 ? (
-        <p className="text-gray-500 text-sm bg-[#10151D] border border-white/5 rounded-2xl p-8 text-center">No registered customers yet.</p>
+        <p className="text-[var(--ma-muted)] text-sm bg-[var(--ma-card)] border border-[var(--ma-border)] rounded-2xl p-8 text-center">No registered customers yet.</p>
       ) : (
-        <div className="bg-[#10151D] border border-white/5 rounded-2xl overflow-hidden overflow-x-auto">
+        <div className="bg-[var(--ma-card)] border border-[var(--ma-border)] rounded-2xl overflow-hidden overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="text-left text-xs text-gray-500 border-b border-white/5">
+              <tr className="text-left text-xs text-[var(--ma-muted)] border-b border-[var(--ma-border)]">
                 <th className="px-4 py-3 font-medium">Customer</th>
                 <th className="px-4 py-3 font-medium">Phone</th>
                 <th className="px-4 py-3 font-medium">Orders</th>
@@ -81,16 +81,16 @@ export default function AdminCustomers() {
             </thead>
             <tbody>
               {customers.map(c => (
-                <tr key={c.id} className="border-b border-white/5 last:border-0">
+                <tr key={c.id} className="border-b border-[var(--ma-border)] last:border-0">
                   <td className="px-4 py-3">
-                    <p className="text-white">{c.full_name}</p>
-                    {c.email && <p className="text-xs text-gray-500">{c.email}</p>}
+                    <p className="text-[var(--ma-foreground)]">{c.full_name}</p>
+                    {c.email && <p className="text-xs text-[var(--ma-muted)]">{c.email}</p>}
                   </td>
-                  <td className="px-4 py-3 text-gray-400">{c.phone || "—"}</td>
-                  <td className="px-4 py-3 text-gray-400">{c.order_count}</td>
-                  <td className="px-4 py-3 text-white">Rs. {c.total_spent.toLocaleString()}</td>
-                  <td className="px-4 py-3 text-gray-400">{c.last_order_at ? new Date(c.last_order_at).toLocaleDateString() : "—"}</td>
-                  <td className="px-4 py-3 text-gray-400">{new Date(c.created_at).toLocaleDateString()}</td>
+                  <td className="px-4 py-3 text-[var(--ma-muted)]">{c.phone || "—"}</td>
+                  <td className="px-4 py-3 text-[var(--ma-muted)]">{c.order_count}</td>
+                  <td className="px-4 py-3 text-[var(--ma-foreground)]">Rs. {c.total_spent.toLocaleString()}</td>
+                  <td className="px-4 py-3 text-[var(--ma-muted)]">{c.last_order_at ? new Date(c.last_order_at).toLocaleDateString() : "—"}</td>
+                  <td className="px-4 py-3 text-[var(--ma-muted)]">{new Date(c.created_at).toLocaleDateString()}</td>
                 </tr>
               ))}
             </tbody>

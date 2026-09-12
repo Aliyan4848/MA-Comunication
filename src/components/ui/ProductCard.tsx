@@ -51,7 +51,7 @@ export default function ProductCard({ product, category }: Props) {
     >
       <Link to={`/products/${product.slug}`} className="block">
         {/* Image area */}
-        <div className="relative overflow-hidden bg-[#0A0F16]" style={{ aspectRatio: "1 / 1" }}>
+        <div className="relative overflow-hidden bg-[var(--ma-surface)]" style={{ aspectRatio: "1 / 1" }}>
           <img
             src={mainImage}
             alt={product.name}
@@ -87,7 +87,7 @@ export default function ProductCard({ product, category }: Props) {
           {/* Out of stock overlay */}
           {outOfStock && (
             <div className="absolute inset-0 bg-black/55 flex items-center justify-center z-10">
-              <span className="text-white text-xs font-semibold tracking-wide bg-black/40 px-3 py-1.5 rounded-full backdrop-blur-sm border border-white/10">
+              <span className="text-[var(--ma-foreground)] text-xs font-semibold tracking-wide bg-black/40 px-3 py-1.5 rounded-full backdrop-blur-sm border border-[var(--ma-border)]">
                 Out of Stock
               </span>
             </div>
@@ -97,14 +97,14 @@ export default function ProductCard({ product, category }: Props) {
           <div className="absolute top-3 right-3 flex flex-col gap-2 z-10 opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-200">
             <button
               onClick={e => e.preventDefault()}
-              className="w-8 h-8 rounded-xl bg-[#0A0F16]/85 backdrop-blur-sm border border-white/10 flex items-center justify-center text-gray-400 hover:text-pink-400 hover:border-pink-400/30 transition-all"
+              className="w-8 h-8 rounded-xl bg-[var(--ma-surface)]/85 backdrop-blur-sm border border-[var(--ma-border)] flex items-center justify-center text-[var(--ma-muted)] hover:text-pink-400 hover:border-pink-400/30 transition-all"
               aria-label="Wishlist"
             >
               <Heart size={13} />
             </button>
             <button
               onClick={e => { e.preventDefault(); navigate(`/products/${product.slug}`) }}
-              className="w-8 h-8 rounded-xl bg-[#0A0F16]/85 backdrop-blur-sm border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/30 transition-all"
+              className="w-8 h-8 rounded-xl bg-[var(--ma-surface)]/85 backdrop-blur-sm border border-[var(--ma-border)] flex items-center justify-center text-[var(--ma-muted)] hover:text-[var(--ma-foreground)] hover:border-white/30 transition-all"
               aria-label="View product"
             >
               <Eye size={13} />
@@ -118,19 +118,19 @@ export default function ProductCard({ product, category }: Props) {
         {/* Info */}
         <div className="p-4 flex-1 flex flex-col">
           {category && (
-            <p className="text-[10px] font-semibold text-gray-600 uppercase tracking-widest mb-1.5">
+            <p className="text-[10px] font-semibold text-[var(--ma-muted)] uppercase tracking-widest mb-1.5">
               {category.name}
             </p>
           )}
-          <h3 className="text-sm font-semibold text-gray-200 leading-snug line-clamp-2 mb-3 group-hover:text-white transition-colors flex-1">
+          <h3 className="text-sm font-semibold text-gray-200 leading-snug line-clamp-2 mb-3 group-hover:text-[var(--ma-foreground)] transition-colors flex-1">
             {product.name}
           </h3>
 
           {/* Price row */}
           <div className="flex items-baseline gap-2 mb-3">
-            <span className="text-base font-black text-white">{fmt(displayPrice)}</span>
+            <span className="text-base font-black text-[var(--ma-foreground)]">{fmt(displayPrice)}</span>
             {product.salePrice && (
-              <span className="text-xs text-gray-600 line-through">{fmt(product.price)}</span>
+              <span className="text-xs text-[var(--ma-muted)] line-through">{fmt(product.price)}</span>
             )}
           </div>
 

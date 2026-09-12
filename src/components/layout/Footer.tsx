@@ -107,7 +107,7 @@ export default function Footer() {
               {settings.tiktok && (
                 <a href={settings.tiktok} target="_blank" rel="noopener noreferrer"
                   className="flex items-center gap-3 text-sm text-[var(--ma-muted)] hover:text-[var(--ma-foreground)] transition-colors group">
-                  <div className="w-8 h-8 rounded-lg bg-[var(--ma-card-hover)] flex items-center justify-center group-hover:bg-white/10 transition-colors">
+                  <div className="w-8 h-8 rounded-lg bg-[var(--ma-card-hover)] flex items-center justify-center group-hover:bg-[var(--ma-card-hover)] transition-colors">
                     <Video size={15} className="text-[var(--ma-muted)] group-hover:text-[var(--ma-foreground)]" />
                   </div>
                   TikTok

@@ -22,7 +22,7 @@ export default function AdminHomepage() {
     }
   }
 
-  const inputClass = "w-full bg-[#0A0F16] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-gray-600 outline-none focus:border-[#2B8EF0]/50 transition-colors"
+  const inputClass = "w-full bg-[var(--ma-surface)] border border-[var(--ma-border)] rounded-xl px-4 py-2.5 text-sm text-[var(--ma-foreground)] placeholder-[var(--ma-muted)] outline-none focus:border-[#2B8EF0]/50 transition-colors"
 
   const toggleFeatured = (id: string) => {
     setForm(prev => ({
@@ -39,8 +39,8 @@ export default function AdminHomepage() {
     <div>
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-xl font-bold text-white">Homepage</h1>
-          <p className="text-gray-500 text-sm mt-0.5">Manage homepage content</p>
+          <h1 className="text-xl font-bold text-[var(--ma-foreground)]">Homepage</h1>
+          <p className="text-[var(--ma-muted)] text-sm mt-0.5">Manage homepage content</p>
         </div>
         <button onClick={save} disabled={saving} className="flex items-center gap-2 px-5 py-2.5 bg-[#2B8EF0] hover:bg-[#1A7DE0] text-white font-semibold rounded-xl text-sm disabled:opacity-50 transition-all">
           <Save size={15} /> {saving ? "Saving..." : "Save Changes"}
@@ -80,7 +80,7 @@ export default function AdminHomepage() {
           <div className="flex items-center gap-3 mb-4">
             <label className="flex items-center gap-2 cursor-pointer">
               <input type="checkbox" checked={form.promo.enabled} onChange={e => setForm(f => ({ ...f, promo: { ...f.promo, enabled: e.target.checked } }))} className="accent-[#2B8EF0]" />
-              <span className="text-sm text-gray-300">Enable promotional banner</span>
+              <span className="text-sm text-[var(--ma-foreground)]">Enable promotional banner</span>
             </label>
           </div>
           <div className={form.promo.enabled ? "" : "opacity-40 pointer-events-none"}>
@@ -108,21 +108,21 @@ export default function AdminHomepage() {
 
         {/* Featured Products */}
         <Section title="Featured Products Selection">
-          <p className="text-xs text-gray-500 mb-4">{form.featuredProductIds.length} products selected. Click to toggle.</p>
+          <p className="text-xs text-[var(--ma-muted)] mb-4">{form.featuredProductIds.length} products selected. Click to toggle.</p>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
             {publishedProducts.map(p => {
               const selected = form.featuredProductIds.includes(p.id)
               return (
-                <button key={p.id} onClick={() => toggleFeatured(p.id)} className={`relative rounded-xl overflow-hidden border transition-all text-left ${selected ? "border-[#2B8EF0] bg-[#2B8EF0]/5" : "border-white/5 bg-[#10151D] hover:border-white/15"}`}>
+                <button key={p.id} onClick={() => toggleFeatured(p.id)} className={`relative rounded-xl overflow-hidden border transition-all text-left ${selected ? "border-[#2B8EF0] bg-[#2B8EF0]/5" : "border-[var(--ma-border)] bg-[var(--ma-card)] hover:border-white/15"}`}>
                   <div className="aspect-square overflow-hidden">
                     <img src={p.images[0]?.url || ""} alt={p.name} className="w-full h-full object-cover opacity-70" />
                   </div>
                   <div className="p-2">
-                    <p className="text-xs text-white line-clamp-2 leading-snug">{p.name}</p>
+                    <p className="text-xs text-[var(--ma-foreground)] line-clamp-2 leading-snug">{p.name}</p>
                   </div>
                   {selected && (
                     <div className="absolute top-2 right-2 w-5 h-5 bg-[#2B8EF0] rounded-full flex items-center justify-center">
-                      <Check size={11} className="text-white" />
+                      <Check size={11} className="text-[var(--ma-foreground)]" />
                     </div>
                   )}
                 </button>
@@ -137,8 +137,8 @@ export default function AdminHomepage() {
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-xl bg-[#10151D] border border-white/5 p-5">
-      <h3 className="text-sm font-semibold text-white mb-4">{title}</h3>
+    <div className="rounded-xl bg-[var(--ma-card)] border border-[var(--ma-border)] p-5">
+      <h3 className="text-sm font-semibold text-[var(--ma-foreground)] mb-4">{title}</h3>
       <div className="space-y-4">{children}</div>
     </div>
   )
@@ -147,7 +147,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <label className="block text-xs text-gray-500 mb-1.5">{label}</label>
+      <label className="block text-xs text-[var(--ma-muted)] mb-1.5">{label}</label>
       {children}
     </div>
   )

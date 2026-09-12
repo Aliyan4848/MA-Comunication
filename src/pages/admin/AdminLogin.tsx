@@ -34,19 +34,19 @@ export default function AdminLogin() {
           <div className="w-14 h-14 rounded-2xl bg-[#2B8EF0]/20 border border-[#2B8EF0]/30 flex items-center justify-center mx-auto mb-4">
             <Zap size={24} className="text-[#2B8EF0]" />
           </div>
-          <h1 className="text-xl font-bold text-white">MA Communication</h1>
-          <p className="text-gray-500 text-sm mt-1">Admin Dashboard</p>
+          <h1 className="text-xl font-bold text-[var(--ma-foreground)]">MA Communication</h1>
+          <p className="text-[var(--ma-muted)] text-sm mt-1">Admin Dashboard</p>
         </div>
 
-        <div className="rounded-2xl bg-[#10151D] border border-white/5 p-6">
+        <div className="rounded-2xl bg-[var(--ma-card)] border border-[var(--ma-border)] p-6">
           <div className="flex items-center gap-2 mb-6">
-            <Lock size={14} className="text-gray-500" />
-            <p className="text-xs text-gray-500">Secure admin access</p>
+            <Lock size={14} className="text-[var(--ma-muted)]" />
+            <p className="text-xs text-[var(--ma-muted)]">Secure admin access</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-xs text-gray-500 mb-1.5">Admin Email</label>
+              <label className="block text-xs text-[var(--ma-muted)] mb-1.5">Admin Email</label>
               <input
                 type="email"
                 value={email}
@@ -55,11 +55,11 @@ export default function AdminLogin() {
                 required
                 autoFocus
                 autoComplete="username"
-                className="w-full bg-[#0A0F16] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 outline-none focus:border-[#2B8EF0]/50 transition-colors"
+                className="w-full bg-[var(--ma-surface)] border border-[var(--ma-border)] rounded-xl px-4 py-3 text-sm text-[var(--ma-foreground)] placeholder-[var(--ma-muted)] outline-none focus:border-[#2B8EF0]/50 transition-colors"
               />
             </div>
             <div>
-              <label className="block text-xs text-gray-500 mb-1.5">Password</label>
+              <label className="block text-xs text-[var(--ma-muted)] mb-1.5">Password</label>
               <div className="relative">
                 <input
                   type={show ? "text" : "password"}
@@ -68,9 +68,9 @@ export default function AdminLogin() {
                   placeholder="Enter password"
                   required
                   autoComplete="current-password"
-                  className="w-full bg-[#0A0F16] border border-white/10 rounded-xl px-4 py-3 pr-10 text-sm text-white placeholder-gray-600 outline-none focus:border-[#2B8EF0]/50 transition-colors"
+                  className="w-full bg-[var(--ma-surface)] border border-[var(--ma-border)] rounded-xl px-4 py-3 pr-10 text-sm text-[var(--ma-foreground)] placeholder-[var(--ma-muted)] outline-none focus:border-[#2B8EF0]/50 transition-colors"
                 />
-                <button type="button" onClick={() => setShow(v => !v)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-400">
+                <button type="button" onClick={() => setShow(v => !v)} className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--ma-muted)] hover:text-[var(--ma-muted)]">
                   {show ? <EyeOff size={15} /> : <Eye size={15} />}
                 </button>
               </div>
@@ -87,8 +87,8 @@ export default function AdminLogin() {
           </form>
         </div>
 
-        <p className="text-center mt-6 text-xs text-gray-700">
-          <a href="/" className="hover:text-gray-500 transition-colors">← Back to website</a>
+        <p className="text-center mt-6 text-xs text-[var(--ma-muted)]">
+          <a href="/" className="hover:text-[var(--ma-muted)] transition-colors">← Back to website</a>
         </p>
       </div>
     </div>

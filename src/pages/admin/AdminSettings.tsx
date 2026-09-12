@@ -3,6 +3,7 @@ import { Save, Eye, EyeOff } from "lucide-react"
 import { useStore } from "../../contexts/StoreContext"
 import { useToast } from "../../contexts/ToastContext"
 import { useAuth } from "../../contexts/AuthContext"
+import ThemeSelector from "../../components/ui/ThemeSelector"
 import type { SiteSettings } from "../../types"
 
 export default function AdminSettings() {
@@ -39,14 +40,14 @@ export default function AdminSettings() {
     toast("Admin password updated!")
   }
 
-  const inputClass = "w-full bg-[#0A0F16] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-gray-600 outline-none focus:border-[#2B8EF0]/50 transition-colors"
+  const inputClass = "w-full bg-[var(--ma-surface)] border border-[var(--ma-border)] rounded-xl px-4 py-2.5 text-sm text-[var(--ma-foreground)] placeholder-[var(--ma-muted)] outline-none focus:border-[#2B8EF0]/50 transition-colors"
 
   return (
     <div>
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-xl font-bold text-white">Settings</h1>
-          <p className="text-gray-500 text-sm mt-0.5">Manage business information and website settings</p>
+          <h1 className="text-xl font-bold text-[var(--ma-foreground)]">Settings</h1>
+          <p className="text-[var(--ma-muted)] text-sm mt-0.5">Manage business information and website settings</p>
         </div>
         <button onClick={save} disabled={saving} className="flex items-center gap-2 px-5 py-2.5 bg-[#2B8EF0] hover:bg-[#1A7DE0] text-white font-semibold rounded-xl text-sm disabled:opacity-50 transition-all">
           <Save size={15} /> {saving ? "Saving..." : "Save Settings"}
@@ -106,7 +107,13 @@ export default function AdminSettings() {
           <Field label="Delivery Charge (Rs.)">
             <input type="number" value={form.deliveryCharge} onChange={e => set("deliveryCharge", +e.target.value)} className={inputClass} min={0} />
           </Field>
-          <p className="text-xs text-gray-600">This amount is added to every order at checkout.</p>
+          <p className="text-xs text-[var(--ma-muted)]">This amount is added to every order at checkout.</p>
+        </Section>
+
+        {/* Appearance */}
+        <Section title="Appearance">
+          <ThemeSelector />
+          <p className="text-xs text-[var(--ma-muted)] mt-3">This only affects the admin panel — it's stored separately from the customer storefront's theme.</p>
         </Section>
 
         {/* Admin */}
@@ -120,7 +127,7 @@ export default function AdminSettings() {
                 placeholder="At least 8 characters"
                 className={inputClass + " pr-10"}
               />
-              <button type="button" onClick={() => setShowPass(v => !v)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-400">
+              <button type="button" onClick={() => setShowPass(v => !v)} className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--ma-muted)] hover:text-[var(--ma-muted)]">
                 {showPass ? <EyeOff size={15} /> : <Eye size={15} />}
               </button>
             </div>
@@ -128,12 +135,12 @@ export default function AdminSettings() {
           <button
             onClick={changePassword}
             disabled={passSaving || newPassword.length === 0}
-            className="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white text-sm font-medium rounded-xl disabled:opacity-50 transition-all"
+            className="px-4 py-2 bg-white/5 hover:bg-[var(--ma-card-hover)] border border-[var(--ma-border)] text-[var(--ma-foreground)] text-sm font-medium rounded-xl disabled:opacity-50 transition-all"
           >
             {passSaving ? "Updating..." : "Update Password"}
           </button>
-          <p className="text-xs text-gray-600">
-            Sign-in is handled by Supabase Auth. To add or remove admin accounts, use the Supabase dashboard (Authentication → Users, then add the user's id to the <code className="text-gray-500">admins</code> table).
+          <p className="text-xs text-[var(--ma-muted)]">
+            Sign-in is handled by Supabase Auth. To add or remove admin accounts, use the Supabase dashboard (Authentication → Users, then add the user's id to the <code className="text-[var(--ma-muted)]">admins</code> table).
           </p>
         </Section>
       </div>
@@ -143,8 +150,8 @@ export default function AdminSettings() {
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-xl bg-[#10151D] border border-white/5 p-5">
-      <h3 className="text-sm font-semibold text-white mb-4">{title}</h3>
+    <div className="rounded-xl bg-[var(--ma-card)] border border-[var(--ma-border)] p-5">
+      <h3 className="text-sm font-semibold text-[var(--ma-foreground)] mb-4">{title}</h3>
       <div className="space-y-4">{children}</div>
     </div>
   )
@@ -153,7 +160,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <label className="block text-xs text-gray-500 mb-1.5">{label}</label>
+      <label className="block text-xs text-[var(--ma-muted)] mb-1.5">{label}</label>
       {children}
     </div>
   )
