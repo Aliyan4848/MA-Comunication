@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react"
 import { Link, NavLink, useLocation } from "react-router-dom"
-import { ShoppingCart, Search, Menu, X, Zap } from "lucide-react"
+import { ShoppingCart, Search, Menu, X, Zap, User } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useCart } from "../../contexts/CartContext"
 import { useStore } from "../../contexts/StoreContext"
+import { useAuth } from "../../contexts/AuthContext"
+import ThemeToggle from "../ui/ThemeToggle"
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -12,6 +14,7 @@ export default function Navbar() {
   const [searchQuery, setSearchQuery] = useState("")
   const { count } = useCart()
   const { settings } = useStore()
+  const { session } = useAuth()
   const location = useLocation()
 
   useEffect(() => {
@@ -52,7 +55,7 @@ export default function Navbar() {
             <div className="w-8 h-8 rounded-lg bg-[#2B8EF0]/20 border border-[#2B8EF0]/30 flex items-center justify-center group-hover:bg-[#2B8EF0]/30 transition-colors">
               <Zap size={16} className="text-[#2B8EF0]" />
             </div>
-            <span className="font-bold text-white text-base tracking-tight">
+            <span className="font-bold text-[var(--ma-foreground)] text-base tracking-tight">
               MA <span className="text-[#2B8EF0]">Communication</span>
             </span>
           </Link>
@@ -66,7 +69,7 @@ export default function Navbar() {
                 end={link.to === "/"}
                 className={({ isActive }) =>
                   `px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                    isActive ? "text-white bg-white/5" : "text-gray-400 hover:text-white hover:bg-white/5"
+                    isActive ? "text-[var(--ma-foreground)] bg-[var(--ma-card-hover)]" : "text-[var(--ma-muted)] hover:text-[var(--ma-foreground)] hover:bg-[var(--ma-card-hover)]"
                   }`
                 }
               >
@@ -77,19 +80,29 @@ export default function Navbar() {
 
           {/* Right Actions */}
           <div className="flex items-center gap-2">
+            <ThemeToggle className="hidden sm:inline-flex" />
             {/* Search */}
             <button
               onClick={() => setSearchOpen(true)}
-              className="w-9 h-9 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/5 transition-all"
+              className="w-9 h-9 rounded-lg flex items-center justify-center text-[var(--ma-muted)] hover:text-[var(--ma-foreground)] hover:bg-[var(--ma-card-hover)] transition-all"
               aria-label="Search"
             >
               <Search size={18} />
             </button>
 
+            {/* Account */}
+            <Link
+              to={session ? "/account" : "/login"}
+              className="w-9 h-9 rounded-lg flex items-center justify-center text-[var(--ma-muted)] hover:text-[var(--ma-foreground)] hover:bg-[var(--ma-card-hover)] transition-all"
+              aria-label={session ? "My Account" : "Sign in"}
+            >
+              <User size={18} />
+            </Link>
+
             {/* Cart */}
             <Link
               to="/cart"
-              className="relative w-9 h-9 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/5 transition-all"
+              className="relative w-9 h-9 rounded-lg flex items-center justify-center text-[var(--ma-muted)] hover:text-[var(--ma-foreground)] hover:bg-[var(--ma-card-hover)] transition-all"
               aria-label="Cart"
             >
               <ShoppingCart size={18} />
@@ -108,7 +121,7 @@ export default function Navbar() {
             {/* Mobile menu */}
             <button
               onClick={() => setMenuOpen(v => !v)}
-              className="lg:hidden w-9 h-9 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/5 transition-all"
+              className="lg:hidden w-9 h-9 rounded-lg flex items-center justify-center text-[var(--ma-muted)] hover:text-[var(--ma-foreground)] hover:bg-[var(--ma-card-hover)] transition-all"
               aria-label="Menu"
             >
               {menuOpen ? <X size={18} /> : <Menu size={18} />}
@@ -129,7 +142,7 @@ export default function Navbar() {
             style={{ top: "60px" }}
           >
             <div
-              className="absolute inset-0 bg-[#05070A]/95 backdrop-blur-xl"
+              className="absolute inset-0 bg-[var(--ma-background)]/95 backdrop-blur-xl"
               onClick={() => setMenuOpen(false)}
             />
             <nav className="relative flex flex-col p-6 gap-1">
@@ -145,7 +158,7 @@ export default function Navbar() {
                     end={link.to === "/"}
                     className={({ isActive }) =>
                       `block px-4 py-3 rounded-xl text-base font-medium transition-colors ${
-                        isActive ? "bg-[#2B8EF0]/10 text-[#2B8EF0] border border-[#2B8EF0]/20" : "text-gray-300 hover:bg-white/5 hover:text-white"
+                        isActive ? "bg-[#2B8EF0]/10 text-[#2B8EF0] border border-[#2B8EF0]/20" : "text-[var(--ma-foreground)] hover:bg-[var(--ma-card-hover)] hover:text-[var(--ma-foreground)]"
                       }`
                     }
                   >
@@ -153,9 +166,12 @@ export default function Navbar() {
                   </NavLink>
                 </motion.div>
               ))}
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.35 }} className="mt-4 pt-4 border-t border-white/5">
-                <p className="text-xs text-gray-600 px-4">{settings.businessName}</p>
-                <p className="text-xs text-gray-600 px-4 mt-1">{settings.phone}</p>
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.35 }} className="mt-4 pt-4 border-t border-[var(--ma-border)] flex items-center justify-between px-4">
+                <div>
+                  <p className="text-xs text-[var(--ma-muted)]">{settings.businessName}</p>
+                  <p className="text-xs text-[var(--ma-muted)] mt-1">{settings.phone}</p>
+                </div>
+                <ThemeToggle />
               </motion.div>
             </nav>
           </motion.div>
@@ -179,7 +195,7 @@ export default function Navbar() {
               className="relative w-full max-w-2xl"
             >
               <div className="relative">
-                <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
+                <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--ma-muted)]" />
                 <input
                   autoFocus
                   value={searchQuery}
@@ -191,16 +207,16 @@ export default function Navbar() {
                     if (e.key === "Escape") setSearchOpen(false)
                   }}
                   placeholder="Search products, categories..."
-                  className="w-full bg-[#10151D] border border-white/10 rounded-2xl pl-12 pr-12 py-4 text-white placeholder-gray-500 text-base outline-none focus:border-[#2B8EF0]/50 transition-colors"
+                  className="w-full bg-[var(--ma-card)] border border-[var(--ma-border)] rounded-2xl pl-12 pr-12 py-4 text-[var(--ma-foreground)] placeholder-gray-500 text-base outline-none focus:border-[#2B8EF0]/50 transition-colors"
                 />
                 <button
                   onClick={() => setSearchOpen(false)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white transition-colors"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--ma-muted)] hover:text-[var(--ma-foreground)] transition-colors"
                 >
                   <X size={18} />
                 </button>
               </div>
-              <p className="text-xs text-gray-600 text-center mt-3">Press Enter to search</p>
+              <p className="text-xs text-[var(--ma-muted)] text-center mt-3">Press Enter to search</p>
             </motion.div>
           </motion.div>
         )}

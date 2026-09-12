@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom"
 import { CheckCircle, Package, ArrowRight } from "lucide-react"
 import { motion } from "framer-motion"
 import { useStore } from "../contexts/StoreContext"
+import { useAuth } from "../contexts/AuthContext"
 import type { Order } from "../types"
 
 function fmt(n: number) { return "Rs. " + n.toLocaleString() }
@@ -10,6 +11,7 @@ function fmt(n: number) { return "Rs. " + n.toLocaleString() }
 export default function OrderConfirmation() {
   const { id } = useParams<{ id: string }>()
   const { fetchPublicOrder } = useStore()
+  const { session } = useAuth()
   const [order, setOrder] = useState<Order | null | undefined>(undefined) // undefined = loading
 
   useEffect(() => {
@@ -122,6 +124,25 @@ export default function OrderConfirmation() {
             Continue Shopping <ArrowRight size={14} />
           </Link>
         </div>
+
+        {!session && order.email && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="mt-4 bg-[#2B8EF0]/5 border border-[#2B8EF0]/20 rounded-2xl p-5 text-center"
+          >
+            <p className="text-sm text-white font-medium mb-1">Create an account to easily track your orders and manage future purchases.</p>
+            <p className="text-xs text-gray-500 mb-3">We'll link this order to your account automatically using {order.email}.</p>
+            <Link
+              to="/signup"
+              state={{ from: `/order-confirmation/${order.id}` }}
+              className="inline-block px-5 py-2 bg-[#2B8EF0] hover:bg-[#1A7DE0] text-white text-sm font-medium rounded-xl transition-all"
+            >
+              Create Account
+            </Link>
+          </motion.div>
+        )}
       </div>
     </div>
   )

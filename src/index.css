@@ -5,21 +5,59 @@
 @theme {
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
 
-  --color-background: #05070A;
-  --color-surface: #0A0F16;
-  --color-card: #10151D;
-  --color-card-hover: #151B24;
-  --color-border: rgba(255, 255, 255, 0.06);
-  --color-border-hover: rgba(255, 255, 255, 0.12);
+  --color-background: var(--ma-background);
+  --color-surface: var(--ma-surface);
+  --color-card: var(--ma-card);
+  --color-card-hover: var(--ma-card-hover);
+  --color-border: var(--ma-border);
+  --color-border-hover: var(--ma-border-hover);
 
   --color-primary: #2B8EF0;
   --color-primary-hover: #1A7DE0;
   --color-cyan: #00D4FF;
   --color-violet: #7C3AED;
 
-  --color-foreground: #F0F4FF;
-  --color-muted: #6B7280;
-  --color-dim: #374151;
+  --color-foreground: var(--ma-foreground);
+  --color-muted: var(--ma-muted);
+  --color-dim: var(--ma-dim);
+}
+
+/*
+ * Semantic theme tokens. Dark is the ORIGINAL MA Communication palette
+ * (unchanged), so every page that hasn't been touched for light-mode yet
+ * still renders pixel-identical to before. Light is a proper, separately
+ * designed palette (not an inverted dark mode), applied via [data-theme="light"]
+ * on <html>, set before first paint (see index.html) to avoid a flash.
+ */
+:root,
+[data-theme="dark"] {
+  --ma-background: #05070A;
+  --ma-surface: #0A0F16;
+  --ma-card: #10151D;
+  --ma-card-hover: #151B24;
+  --ma-border: rgba(255, 255, 255, 0.06);
+  --ma-border-hover: rgba(255, 255, 255, 0.12);
+  --ma-foreground: #F0F4FF;
+  --ma-muted: #6B7280;
+  --ma-dim: #374151;
+  --ma-scrollbar-track: #0A0F16;
+  --ma-scrollbar-thumb: #1F2937;
+  --ma-scrollbar-thumb-hover: #374151;
+}
+
+[data-theme="light"] {
+  --ma-background: #F7F9FC;
+  --ma-surface: #FFFFFF;
+  --ma-card: #FFFFFF;
+  --ma-card-hover: #F1F5F9;
+  --ma-border: rgba(15, 23, 42, 0.08);
+  --ma-border-hover: rgba(15, 23, 42, 0.16);
+  --ma-foreground: #0F172A;
+  --ma-muted: #64748B;
+  --ma-dim: #CBD5E1;
+  --ma-scrollbar-track: #F1F5F9;
+  --ma-scrollbar-thumb: #CBD5E1;
+  --ma-scrollbar-thumb-hover: #94A3B8;
 }
 
 *, *::before, *::after {
@@ -30,10 +68,14 @@ html {
   scroll-behavior: smooth;
 }
 
+html[data-theme="light"] * {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background-color: #05070A;
-  color: #F0F4FF;
+  background-color: var(--ma-background);
+  color: var(--ma-foreground);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -43,17 +85,17 @@ body {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0A0F16;
+  background: var(--ma-scrollbar-track);
 }
 ::-webkit-scrollbar-thumb {
-  background: #1F2937;
+  background: var(--ma-scrollbar-thumb);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #374151;
+  background: var(--ma-scrollbar-thumb-hover);
 }
 
 ::selection {
   background: rgba(43, 142, 240, 0.3);
-  color: #F0F4FF;
+  color: var(--ma-foreground);
 }

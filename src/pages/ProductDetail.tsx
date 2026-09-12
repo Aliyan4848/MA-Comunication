@@ -7,6 +7,7 @@ import { useCart } from "../contexts/CartContext"
 import { useToast } from "../contexts/ToastContext"
 import ProductCard from "../components/ui/ProductCard"
 import ScrollReveal from "../components/ui/ScrollReveal"
+import ProductReviews from "../components/ui/ProductReviews"
 import { useSeo, useStructuredData } from "../lib/seo"
 
 function formatPrice(p: number) {
@@ -208,6 +209,9 @@ export default function ProductDetail() {
 
         {/* Description + Specs tabs */}
         <DescriptionSpecs product={product} />
+
+        {/* Reviews */}
+        <ProductReviews productId={product.id} />
 
         {/* Related */}
         {related.length > 0 && (

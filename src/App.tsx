@@ -4,6 +4,7 @@ import { StoreProvider } from "./contexts/StoreContext"
 import { CartProvider } from "./contexts/CartContext"
 import { ToastProvider } from "./contexts/ToastContext"
 import { AuthProvider } from "./contexts/AuthContext"
+import { ThemeProvider } from "./contexts/ThemeContext"
 
 import Navbar from "./components/layout/Navbar"
 import Footer from "./components/layout/Footer"
@@ -19,6 +20,17 @@ import OrderConfirmation from "./pages/OrderConfirmation"
 import About from "./pages/About"
 import Contact from "./pages/Contact"
 import NotFound from "./pages/NotFound"
+import Signup from "./pages/Signup"
+import Login from "./pages/Login"
+import ForgotPassword from "./pages/ForgotPassword"
+import ResetPassword from "./pages/ResetPassword"
+import TrackOrder from "./pages/TrackOrder"
+
+import AccountLayout from "./pages/account/AccountLayout"
+import AccountProfile from "./pages/account/AccountProfile"
+import AccountAddresses from "./pages/account/AccountAddresses"
+import AccountOrders from "./pages/account/AccountOrders"
+import AccountOrderDetail from "./pages/account/AccountOrderDetail"
 
 import AdminLayout from "./pages/admin/AdminLayout"
 import AdminDashboard from "./pages/admin/AdminDashboard"
@@ -29,6 +41,8 @@ import AdminOrders from "./pages/admin/AdminOrders"
 import AdminOrderDetail from "./pages/admin/AdminOrderDetail"
 import AdminHomepage from "./pages/admin/AdminHomepage"
 import AdminSettings from "./pages/admin/AdminSettings"
+import AdminCustomers from "./pages/admin/AdminCustomers"
+import AdminReviews from "./pages/admin/AdminReviews"
 
 function PageTransition({ children }: { children: React.ReactNode }) {
   return (
@@ -60,6 +74,18 @@ function StoreFront() {
           <Route path="/cart" element={<PageTransition><Cart /></PageTransition>} />
           <Route path="/checkout" element={<PageTransition><Checkout /></PageTransition>} />
           <Route path="/order-confirmation/:id" element={<PageTransition><OrderConfirmation /></PageTransition>} />
+          <Route path="/track-order" element={<PageTransition><TrackOrder /></PageTransition>} />
+          <Route path="/track-order/:orderNumber" element={<PageTransition><TrackOrder /></PageTransition>} />
+          <Route path="/signup" element={<PageTransition><Signup /></PageTransition>} />
+          <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
+          <Route path="/forgot-password" element={<PageTransition><ForgotPassword /></PageTransition>} />
+          <Route path="/reset-password" element={<PageTransition><ResetPassword /></PageTransition>} />
+          <Route path="/account" element={<AccountLayout />}>
+            <Route index element={<AccountProfile />} />
+            <Route path="addresses" element={<AccountAddresses />} />
+            <Route path="orders" element={<AccountOrders />} />
+            <Route path="orders/:id" element={<AccountOrderDetail />} />
+          </Route>
           <Route path="/about" element={<PageTransition><About /></PageTransition>} />
           <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
           <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
@@ -79,8 +105,10 @@ export default function App() {
             <ToastProvider>
               <Routes>
                 {/* Admin — a single route owns "/admin/*"; AdminLayout decides
-                    internally whether to show the login screen or the dashboard shell. */}
-                <Route path="/admin" element={<AdminLayout />}>
+                    internally whether to show the login screen or the dashboard shell.
+                    Its own ThemeProvider scope keeps the admin's theme choice
+                    completely separate from the customer storefront's. */}
+                <Route path="/admin" element={<ThemeProvider scope="admin"><AdminLayout /></ThemeProvider>}>
                   <Route index element={<Navigate to="/admin/dashboard" replace />} />
                   <Route path="dashboard" element={<AdminDashboard />} />
                   <Route path="products" element={<AdminProducts />} />
@@ -89,11 +117,13 @@ export default function App() {
                   <Route path="categories" element={<AdminCategories />} />
                   <Route path="orders" element={<AdminOrders />} />
                   <Route path="orders/:id" element={<AdminOrderDetail />} />
+                  <Route path="customers" element={<AdminCustomers />} />
+                  <Route path="reviews" element={<AdminReviews />} />
                   <Route path="homepage" element={<AdminHomepage />} />
                   <Route path="settings" element={<AdminSettings />} />
                 </Route>
                 {/* Storefront */}
-                <Route path="/*" element={<StoreFront />} />
+                <Route path="/*" element={<ThemeProvider scope="storefront"><StoreFront /></ThemeProvider>} />
               </Routes>
             </ToastProvider>
           </CartProvider>

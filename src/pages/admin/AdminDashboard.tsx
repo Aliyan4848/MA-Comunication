@@ -177,14 +177,17 @@ export function StatusBadge({ status }: { status: string }) {
   const styles: Record<string, string> = {
     pending: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20",
     confirmed: "bg-blue-500/10 text-blue-400 border-blue-500/20",
-    processing: "bg-violet-500/10 text-violet-400 border-violet-500/20",
+    processing: "bg-blue-500/10 text-blue-400 border-blue-500/20",
+    packed: "bg-violet-500/10 text-violet-400 border-violet-500/20",
     shipped: "bg-cyan-500/10 text-cyan-400 border-cyan-500/20",
+    out_for_delivery: "bg-cyan-500/10 text-cyan-400 border-cyan-500/20",
     delivered: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
     cancelled: "bg-red-500/10 text-red-400 border-red-500/20",
   }
+  const label = status.split("_").map(w => w[0].toUpperCase() + w.slice(1)).join(" ")
   return (
-    <span className={`text-xs px-2 py-0.5 rounded-full border capitalize ${styles[status] || "bg-gray-500/10 text-gray-400 border-gray-500/20"}`}>
-      {status}
+    <span className={`text-xs px-2 py-0.5 rounded-full border ${styles[status] || "bg-gray-500/10 text-gray-400 border-gray-500/20"}`}>
+      {label}
     </span>
   )
 }

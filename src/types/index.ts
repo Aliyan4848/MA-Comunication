@@ -66,7 +66,7 @@ export interface Order {
   createdAt: string
 }
 
-export type OrderStatus = 'pending' | 'confirmed' | 'processing' | 'shipped' | 'delivered' | 'cancelled'
+export type OrderStatus = 'pending' | 'confirmed' | 'processing' | 'packed' | 'shipped' | 'out_for_delivery' | 'delivered' | 'cancelled'
 
 export interface SiteSettings {
   businessName: string

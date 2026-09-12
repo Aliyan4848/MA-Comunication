@@ -52,6 +52,21 @@ interface StoreContextType {
   updateHomepage: (h: HomepageContent) => Promise<void>
 
   uploadProductImage: (file: File) => Promise<string>
+
+  // Customer account features
+  fetchMyProfile: () => Promise<{ fullName: string; phone: string } | null>
+  updateMyProfile: (fullName: string, phone: string) => Promise<void>
+  fetchMyAddresses: () => Promise<any[]>
+  addMyAddress: (a: { label: string; fullName: string; phone: string; addressLine: string; city: string; isDefault: boolean }) => Promise<void>
+  updateMyAddress: (id: string, a: { label: string; fullName: string; phone: string; addressLine: string; city: string; isDefault: boolean }) => Promise<void>
+  deleteMyAddress: (id: string) => Promise<void>
+  fetchMyOrders: () => Promise<any[]>
+  fetchMyOrderDetail: (orderId: string) => Promise<any>
+  trackGuestOrder: (orderNumber: string, contact: string) => Promise<any>
+  updateOrderStatusAdmin: (orderId: string, newStatus: string, note?: string) => Promise<void>
+  setOrderShipment: (orderId: string, courier: string, trackingNumber: string) => Promise<void>
+  fetchProductReviews: (productId: string) => Promise<{ reviews: any[]; stats: any }>
+  submitReview: (productId: string, orderId: string, rating: number, title: string, body: string) => Promise<void>
 }
 
 const StoreContext = createContext<StoreContextType | null>(null)
@@ -242,6 +257,98 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     setHomepage(h)
   }, [])
 
+  // ---------------- Customer account features ----------------
+  const fetchMyProfile = useCallback(async () => {
+    const { data: sess } = await supabase.auth.getUser()
+    if (!sess.user) return null
+    const { data, error: err } = await supabase.from("profiles").select("full_name, phone").eq("id", sess.user.id).maybeSingle()
+    if (err || !data) return { fullName: "", phone: "" }
+    return { fullName: data.full_name || "", phone: data.phone || "" }
+  }, [])
+
+  const updateMyProfile = useCallback(async (fullName: string, phone: string) => {
+    const { data: sess } = await supabase.auth.getUser()
+    if (!sess.user) throw new Error("Not signed in")
+    const { error: err } = await supabase.from("profiles").upsert({ id: sess.user.id, full_name: fullName, phone, updated_at: new Date().toISOString() })
+    if (err) throw new Error(err.message)
+  }, [])
+
+  const fetchMyAddresses = useCallback(async () => {
+    const { data, error: err } = await supabase.from("addresses").select("*").order("is_default", { ascending: false }).order("created_at", { ascending: false })
+    if (err) throw new Error(err.message)
+    return data || []
+  }, [])
+
+  const addMyAddress = useCallback(async (a: any) => {
+    const { data: sess } = await supabase.auth.getUser()
+    if (!sess.user) throw new Error("Not signed in")
+    if (a.isDefault) await supabase.from("addresses").update({ is_default: false }).eq("user_id", sess.user.id)
+    const { error: err } = await supabase.from("addresses").insert({
+      user_id: sess.user.id, label: a.label, full_name: a.fullName, phone: a.phone, address_line: a.addressLine, city: a.city, is_default: a.isDefault,
+    })
+    if (err) throw new Error(err.message)
+  }, [])
+
+  const updateMyAddress = useCallback(async (id: string, a: any) => {
+    const { data: sess } = await supabase.auth.getUser()
+    if (a.isDefault && sess.user) await supabase.from("addresses").update({ is_default: false }).eq("user_id", sess.user.id)
+    const { error: err } = await supabase.from("addresses").update({
+      label: a.label, full_name: a.fullName, phone: a.phone, address_line: a.addressLine, city: a.city, is_default: a.isDefault,
+    }).eq("id", id)
+    if (err) throw new Error(err.message)
+  }, [])
+
+  const deleteMyAddress = useCallback(async (id: string) => {
+    const { error: err } = await supabase.from("addresses").delete().eq("id", id)
+    if (err) throw new Error(err.message)
+  }, [])
+
+  const fetchMyOrders = useCallback(async () => {
+    const { data, error: err } = await supabase
+      .from("orders")
+      .select("id, order_number, status, total, created_at, courier, tracking_number, order_items(name, image, quantity)")
+      .order("created_at", { ascending: false })
+    if (err) throw new Error(err.message)
+    return data || []
+  }, [])
+
+  const fetchMyOrderDetail = useCallback(async (orderId: string) => {
+    const { data, error: err } = await supabase.rpc("get_my_order", { p_order_id: orderId })
+    if (err) throw new Error(err.message)
+    return data
+  }, [])
+
+  const trackGuestOrder = useCallback(async (orderNumber: string, contact: string) => {
+    const { data, error: err } = await supabase.rpc("track_guest_order", { p_order_number: orderNumber, p_contact: contact })
+    if (err) throw new Error(err.message)
+    return data
+  }, [])
+
+  const updateOrderStatusAdmin = useCallback(async (orderId: string, newStatus: string, note?: string) => {
+    const { error: err } = await supabase.rpc("update_order_status", { p_order_id: orderId, p_new_status: newStatus, p_changed_by: "admin", p_note: note || "" })
+    if (err) throw new Error(err.message)
+    await refreshOrders()
+  }, [refreshOrders])
+
+  const setOrderShipment = useCallback(async (orderId: string, courier: string, trackingNumber: string) => {
+    const { error: err } = await supabase.rpc("set_order_shipment", { p_order_id: orderId, p_courier: courier, p_tracking_number: trackingNumber })
+    if (err) throw new Error(err.message)
+    await refreshOrders()
+  }, [refreshOrders])
+
+  const fetchProductReviews = useCallback(async (productId: string) => {
+    const [{ data: reviewRows }, { data: statsRow }] = await Promise.all([
+      supabase.from("reviews").select("*, review_images(url)").eq("product_id", productId).eq("status", "approved").order("created_at", { ascending: false }),
+      supabase.from("product_review_stats").select("*").eq("product_id", productId).maybeSingle(),
+    ])
+    return { reviews: reviewRows || [], stats: statsRow || { review_count: 0, average_rating: 0, distribution: {} } }
+  }, [])
+
+  const submitReview = useCallback(async (productId: string, orderId: string, rating: number, title: string, body: string) => {
+    const { error: err } = await supabase.rpc("submit_review", { p_product_id: productId, p_order_id: orderId, p_rating: rating, p_title: title, p_body: body })
+    if (err) throw new Error(err.message)
+  }, [])
+
   return (
     <StoreContext.Provider
       value={{
@@ -250,6 +357,9 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         addCategory, updateCategory, deleteCategory,
         placeOrder, fetchPublicOrder, updateOrderStatus, getOrder, refreshOrders,
         updateSettings, updateHomepage, uploadProductImage,
+        fetchMyProfile, updateMyProfile, fetchMyAddresses, addMyAddress, updateMyAddress, deleteMyAddress,
+        fetchMyOrders, fetchMyOrderDetail, trackGuestOrder, updateOrderStatusAdmin, setOrderShipment,
+        fetchProductReviews, submitReview,
       }}
     >
       {children}

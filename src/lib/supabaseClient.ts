@@ -15,5 +15,6 @@ export const supabase = createClient(url || "", anonKey || "", {
   auth: {
     persistSession: true,
     autoRefreshToken: true,
+    detectSessionInUrl: true, // required so /reset-password can pick up the recovery token from the email link
   },
 })
