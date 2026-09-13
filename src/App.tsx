@@ -1,6 +1,7 @@
 import { useLayoutEffect } from "react"
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom"
 import { AnimatePresence, motion } from "framer-motion"
+import { Analytics } from "@vercel/analytics/react"
 import { StoreProvider } from "./contexts/StoreContext"
 import { CartProvider } from "./contexts/CartContext"
 import { ToastProvider } from "./contexts/ToastContext"
@@ -127,6 +128,7 @@ export default function App() {
                 {/* Storefront */}
                 <Route path="/*" element={<ThemeProvider scope="storefront"><StoreFront /></ThemeProvider>} />
               </Routes>
+              <Analytics />
             </ToastProvider>
           </CartProvider>
         </StoreProvider>
