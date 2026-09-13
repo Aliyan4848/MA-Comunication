@@ -10,7 +10,7 @@ const items = [
 
 export default function TrustStrip() {
   return (
-    <section className="border-y border-white/[0.04]" style={{ background: "#080C12" }}>
+    <section className="border-y border-[var(--ma-border)]" style={{ background: "var(--ma-surface)" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-10">
           {items.map((item, i) => (
@@ -20,8 +20,8 @@ export default function TrustStrip() {
                   <item.icon size={16} className="text-[#2B8EF0]" />
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-white leading-none mb-1">{item.title}</p>
-                  <p className="text-xs text-gray-500 leading-snug">{item.desc}</p>
+                  <p className="text-sm font-bold text-[var(--ma-foreground)] leading-none mb-1">{item.title}</p>
+                  <p className="text-xs text-[var(--ma-muted)] leading-snug">{item.desc}</p>
                 </div>
               </div>
             </ScrollReveal>

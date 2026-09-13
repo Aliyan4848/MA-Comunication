@@ -41,15 +41,15 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
               transition={{ duration: 0.2 }}
               className="pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-xl border shadow-2xl min-w-72"
               style={{
-                background: "#10151D",
-                borderColor: t.type === "success" ? "rgba(43,142,240,0.3)" : t.type === "error" ? "rgba(239,68,68,0.3)" : "rgba(255,255,255,0.1)",
+                background: "var(--ma-card)",
+                borderColor: t.type === "success" ? "rgba(43,142,240,0.3)" : t.type === "error" ? "rgba(239,68,68,0.3)" : "var(--ma-border)",
               }}
             >
               {t.type === "success" && <CheckCircle size={18} className="text-blue-400 shrink-0" />}
               {t.type === "error" && <XCircle size={18} className="text-red-400 shrink-0" />}
               {t.type === "info" && <Info size={18} className="text-cyan-400 shrink-0" />}
-              <span className="text-sm text-white flex-1">{t.message}</span>
-              <button onClick={() => remove(t.id)} className="text-gray-500 hover:text-white transition-colors">
+              <span className="text-sm text-[var(--ma-foreground)] flex-1">{t.message}</span>
+              <button onClick={() => remove(t.id)} className="text-[var(--ma-muted)] hover:text-[var(--ma-foreground)] transition-colors">
                 <X size={14} />
               </button>
             </motion.div>

@@ -47,7 +47,7 @@ export default function ProductCard({ product, category }: Props) {
       whileHover={{ y: -5 }}
       transition={{ duration: 0.2, ease: "easeOut" }}
       className="group relative flex flex-col rounded-2xl overflow-hidden border transition-all duration-300"
-      style={{ background: "#10151D", borderColor: "rgba(255,255,255,0.06)" }}
+      style={{ background: "var(--ma-card)", borderColor: "var(--ma-border)" }}
     >
       <Link to={`/products/${product.slug}`} className="block">
         {/* Image area */}
@@ -104,7 +104,7 @@ export default function ProductCard({ product, category }: Props) {
             </button>
             <button
               onClick={e => { e.preventDefault(); navigate(`/products/${product.slug}`) }}
-              className="w-8 h-8 rounded-xl bg-[var(--ma-surface)]/85 backdrop-blur-sm border border-[var(--ma-border)] flex items-center justify-center text-[var(--ma-muted)] hover:text-[var(--ma-foreground)] hover:border-white/30 transition-all"
+              className="w-8 h-8 rounded-xl bg-[var(--ma-surface)]/85 backdrop-blur-sm border border-[var(--ma-border)] flex items-center justify-center text-[var(--ma-muted)] hover:text-[var(--ma-foreground)] hover:border-[var(--ma-border-hover)] transition-all"
               aria-label="View product"
             >
               <Eye size={13} />
@@ -122,7 +122,7 @@ export default function ProductCard({ product, category }: Props) {
               {category.name}
             </p>
           )}
-          <h3 className="text-sm font-semibold text-gray-200 leading-snug line-clamp-2 mb-3 group-hover:text-[var(--ma-foreground)] transition-colors flex-1">
+          <h3 className="text-sm font-semibold text-[var(--ma-foreground)] leading-snug line-clamp-2 mb-3 group-hover:text-[var(--ma-foreground)] transition-colors flex-1">
             {product.name}
           </h3>
 
@@ -159,9 +159,9 @@ export default function ProductCard({ product, category }: Props) {
           disabled={outOfStock}
           className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 disabled:opacity-35 disabled:cursor-not-allowed"
           style={{
-            background: outOfStock ? "rgba(255,255,255,0.04)" : "rgba(43,142,240,0.1)",
-            border: `1px solid ${outOfStock ? "rgba(255,255,255,0.06)" : "rgba(43,142,240,0.25)"}`,
-            color: outOfStock ? "#4B5563" : "#2B8EF0",
+            background: outOfStock ? "var(--ma-surface)" : "rgba(43,142,240,0.1)",
+            border: `1px solid ${outOfStock ? "var(--ma-border)" : "rgba(43,142,240,0.25)"}`,
+            color: outOfStock ? "var(--ma-muted)" : "#2B8EF0",
           }}
           onMouseEnter={e => {
             if (!outOfStock) {

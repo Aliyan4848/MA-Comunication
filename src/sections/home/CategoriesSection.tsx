@@ -17,13 +17,13 @@ export default function CategoriesSection() {
           <div className="flex items-end justify-between mb-12">
             <div>
               <p className="text-[11px] font-bold text-[#2B8EF0] uppercase tracking-[0.2em] mb-3">Shop By Category</p>
-              <h2 className="text-3xl sm:text-4xl font-black text-white leading-tight">
+              <h2 className="text-3xl sm:text-4xl font-black text-[var(--ma-foreground)] leading-tight">
                 Everything you need,<br className="hidden sm:block" /> all in one place.
               </h2>
             </div>
             <Link
               to="/categories"
-              className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-gray-500 hover:text-white transition-colors group"
+              className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-[var(--ma-muted)] hover:text-[var(--ma-foreground)] transition-colors group"
             >
               View all <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
             </Link>
@@ -40,7 +40,7 @@ export default function CategoriesSection() {
                   <motion.div
                     whileHover={{ scale: 1.015 }}
                     transition={{ duration: 0.2 }}
-                    className={`relative overflow-hidden rounded-2xl border border-white/5 group-hover:border-[#2B8EF0]/25 transition-all duration-300 bg-[#10151D] ${isLarge ? "aspect-[4/3] lg:aspect-[4/3]" : "aspect-[4/3]"}`}
+                    className={`relative overflow-hidden rounded-2xl border border-[var(--ma-border)] group-hover:border-[#2B8EF0]/25 transition-all duration-300 bg-[#10151D] ${isLarge ? "aspect-[4/3] lg:aspect-[4/3]" : "aspect-[4/3]"}`}
                   >
                     <img
                       src={cat.image}
@@ -75,7 +75,7 @@ export default function CategoriesSection() {
         </div>
 
         <div className="mt-6 text-center sm:hidden">
-          <Link to="/categories" className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-white transition-colors">
+          <Link to="/categories" className="inline-flex items-center gap-1.5 text-sm text-[var(--ma-muted)] hover:text-[var(--ma-foreground)] transition-colors">
             View all categories <ArrowRight size={13} />
           </Link>
         </div>

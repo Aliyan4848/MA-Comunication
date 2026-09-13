@@ -34,17 +34,17 @@ const reasons = [
 
 export default function WhySection() {
   return (
-    <section className="py-24 px-4 sm:px-6" style={{ background: "linear-gradient(180deg, #0A0F16 0%, #080C12 100%)", borderTop: "1px solid rgba(255,255,255,0.04)", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+    <section className="py-24 px-4 sm:px-6" style={{ background: "linear-gradient(180deg, var(--ma-surface) 0%, var(--ma-background) 100%)", borderTop: "1px solid var(--ma-border)", borderBottom: "1px solid var(--ma-border)" }}>
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-16 xl:gap-24 items-center">
           {/* Left text */}
           <ScrollReveal direction="left">
             <div>
               <p className="text-[11px] font-bold text-[#2B8EF0] uppercase tracking-[0.2em] mb-4">Why MA Communication</p>
-              <h2 className="text-3xl sm:text-4xl font-black text-white mb-5 leading-tight">
+              <h2 className="text-3xl sm:text-4xl font-black text-[var(--ma-foreground)] mb-5 leading-tight">
                 A technology accessories<br />brand built on trust.
               </h2>
-              <p className="text-gray-400 text-base leading-relaxed mb-10 max-w-md">
+              <p className="text-[var(--ma-muted)] text-base leading-relaxed mb-10 max-w-md">
                 We started MA Communication because premium mobile accessories in Pakistan were either overpriced or unreliable. We changed that.
               </p>
               <div className="flex items-center gap-8">
@@ -54,8 +54,8 @@ export default function WhySection() {
                   { n: "PK", l: "Nationwide" },
                 ].map(s => (
                   <div key={s.l}>
-                    <p className="text-2xl font-black text-white">{s.n}</p>
-                    <p className="text-xs text-gray-500 mt-0.5">{s.l}</p>
+                    <p className="text-2xl font-black text-[var(--ma-foreground)]">{s.n}</p>
+                    <p className="text-xs text-[var(--ma-muted)] mt-0.5">{s.l}</p>
                   </div>
                 ))}
               </div>
@@ -67,8 +67,8 @@ export default function WhySection() {
             {reasons.map((r, i) => (
               <ScrollReveal key={r.title} delay={i * 0.1}>
                 <div
-                  className="relative rounded-2xl border border-white/5 p-5 overflow-hidden group hover:border-white/10 transition-all duration-300"
-                  style={{ background: "#10151D" }}
+                  className="relative rounded-2xl border border-[var(--ma-border)] p-5 overflow-hidden group hover:border-[var(--ma-border-hover)] transition-all duration-300"
+                  style={{ background: "var(--ma-card)" }}
                 >
                   {/* Subtle glow on hover */}
                   <div
@@ -81,8 +81,8 @@ export default function WhySection() {
                   >
                     <r.icon size={18} style={{ color: r.color }} />
                   </div>
-                  <h3 className="text-sm font-bold text-white mb-2 relative">{r.title}</h3>
-                  <p className="text-xs text-gray-500 leading-relaxed relative">{r.desc}</p>
+                  <h3 className="text-sm font-bold text-[var(--ma-foreground)] mb-2 relative">{r.title}</h3>
+                  <p className="text-xs text-[var(--ma-muted)] leading-relaxed relative">{r.desc}</p>
                 </div>
               </ScrollReveal>
             ))}

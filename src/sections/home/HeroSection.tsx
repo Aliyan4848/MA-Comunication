@@ -42,7 +42,7 @@ export default function HeroSection() {
   return (
     <section ref={ref} className="relative min-h-[100svh] flex items-center overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-[#05070A]" />
+      <div className="absolute inset-0 bg-[var(--ma-background)]" />
 
       {/* Ambient glows */}
       <div className="absolute inset-0 pointer-events-none">
@@ -55,7 +55,7 @@ export default function HeroSection() {
       {/* Subtle grid */}
       <div className="absolute inset-0 opacity-[0.025]"
         style={{
-          backgroundImage: "linear-gradient(rgba(255,255,255,0.8) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.8) 1px, transparent 1px)",
+          backgroundImage: "linear-gradient(var(--ma-grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--ma-grid-line) 1px, transparent 1px)",
           backgroundSize: "64px 64px",
         }}
       />
@@ -85,7 +85,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 28 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="text-5xl sm:text-6xl lg:text-[68px] xl:text-7xl font-black text-white leading-[1.02] tracking-tight mb-6"
+              className="text-5xl sm:text-6xl lg:text-[68px] xl:text-7xl font-black text-[var(--ma-foreground)] leading-[1.02] tracking-tight mb-6"
             >
               {homepage.hero.title.split(".")[0]}
               <span className="text-transparent bg-clip-text"
@@ -96,7 +96,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.32 }}
-              className="text-base sm:text-lg text-gray-400 leading-relaxed mb-10 max-w-[480px]"
+              className="text-base sm:text-lg text-[var(--ma-muted)] leading-relaxed mb-10 max-w-[480px]"
             >
               {homepage.hero.subtitle}
             </motion.p>
@@ -119,7 +119,7 @@ export default function HeroSection() {
               </Link>
               <Link
                 to={homepage.hero.secondaryCtaLink}
-                className="inline-flex items-center gap-2.5 px-6 py-3.5 font-semibold text-gray-300 hover:text-white rounded-xl border border-white/10 hover:border-white/20 bg-white/[0.03] hover:bg-white/[0.07] transition-all duration-200 text-sm"
+                className="inline-flex items-center gap-2.5 px-6 py-3.5 font-semibold text-[var(--ma-muted)] hover:text-[var(--ma-foreground)] rounded-xl border border-[var(--ma-border)] hover:border-[var(--ma-border-hover)] bg-[var(--ma-card)] hover:bg-[var(--ma-card-hover)] transition-all duration-200 text-sm"
               >
                 Browse Categories
               </Link>
@@ -130,13 +130,13 @@ export default function HeroSection() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.62 }}
-              className="flex items-center gap-6 mt-12 pt-10 border-t border-white/5"
+              className="flex items-center gap-6 mt-12 pt-10 border-t border-[var(--ma-border)]"
             >
               <div className="flex -space-x-2">
                 {["https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&auto=format",
                   "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=40&h=40&fit=crop&auto=format",
                   "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&auto=format"].map((src, i) => (
-                  <img key={i} src={src} alt="Customer" className="w-8 h-8 rounded-full border-2 border-[#05070A] object-cover" />
+                  <img key={i} src={src} alt="Customer" className="w-8 h-8 rounded-full border-2 border-[var(--ma-background)] object-cover" />
                 ))}
               </div>
               <div>
@@ -145,12 +145,12 @@ export default function HeroSection() {
                     <Star key={i} size={11} className="text-yellow-400 fill-yellow-400" />
                   ))}
                 </div>
-                <p className="text-xs text-gray-500">Trusted by 10,000+ customers</p>
+                <p className="text-xs text-[var(--ma-muted)]">Trusted by 10,000+ customers</p>
               </div>
-              <div className="h-8 w-px bg-white/5" />
+              <div className="h-8 w-px bg-[var(--ma-border)]" />
               <div>
-                <p className="text-base font-bold text-white">COD</p>
-                <p className="text-xs text-gray-500 mt-0.5">Available</p>
+                <p className="text-base font-bold text-[var(--ma-foreground)]">COD</p>
+                <p className="text-xs text-[var(--ma-muted)] mt-0.5">Available</p>
               </div>
             </motion.div>
           </motion.div>
@@ -240,7 +240,7 @@ export default function HeroSection() {
 
       {/* Bottom fade */}
       <div className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none"
-        style={{ background: "linear-gradient(to top, #05070A, transparent)" }} />
+        style={{ background: "linear-gradient(to top, var(--ma-background), transparent)" }} />
     </section>
   )
 }

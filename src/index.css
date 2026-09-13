@@ -43,6 +43,7 @@
   --ma-scrollbar-track: #0A0F16;
   --ma-scrollbar-thumb: #1F2937;
   --ma-scrollbar-thumb-hover: #374151;
+  --ma-grid-line: rgba(255, 255, 255, 0.8);
 }
 
 [data-theme="light"] {
@@ -58,6 +59,7 @@
   --ma-scrollbar-track: #F1F5F9;
   --ma-scrollbar-thumb: #CBD5E1;
   --ma-scrollbar-thumb-hover: #94A3B8;
+  --ma-grid-line: rgba(15, 23, 42, 0.5);
 }
 
 *, *::before, *::after {

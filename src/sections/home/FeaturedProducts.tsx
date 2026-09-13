@@ -48,12 +48,12 @@ export default function FeaturedProducts({
           <div className="flex items-end justify-between mb-12">
             <div>
               <p className="text-[11px] font-bold text-[#2B8EF0] uppercase tracking-[0.2em] mb-3">{accent}</p>
-              <h2 className="text-3xl sm:text-4xl font-black text-white">{title}</h2>
-              <p className="text-gray-500 mt-2 text-sm max-w-md">{subtitle}</p>
+              <h2 className="text-3xl sm:text-4xl font-black text-[var(--ma-foreground)]">{title}</h2>
+              <p className="text-[var(--ma-muted)] mt-2 text-sm max-w-md">{subtitle}</p>
             </div>
             <Link
               to={linkTo}
-              className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-gray-500 hover:text-white transition-colors group shrink-0"
+              className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-[var(--ma-muted)] hover:text-[var(--ma-foreground)] transition-colors group shrink-0"
             >
               {linkLabel}
               <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
@@ -72,7 +72,7 @@ export default function FeaturedProducts({
         <div className="text-center mt-8 sm:hidden">
           <Link
             to={linkTo}
-            className="inline-flex items-center gap-2 px-5 py-2.5 border border-white/10 rounded-xl text-sm text-gray-400 hover:text-white hover:border-white/20 transition-all"
+            className="inline-flex items-center gap-2 px-5 py-2.5 border border-[var(--ma-border)] rounded-xl text-sm text-[var(--ma-muted)] hover:text-[var(--ma-foreground)] hover:border-[var(--ma-border-hover)] transition-all"
           >
             {linkLabel} <ArrowRight size={14} />
           </Link>
