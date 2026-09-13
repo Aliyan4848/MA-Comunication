@@ -1,3 +1,4 @@
+import { useLayoutEffect } from "react"
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom"
 import { AnimatePresence, motion } from "framer-motion"
 import { StoreProvider } from "./contexts/StoreContext"
@@ -61,6 +62,7 @@ function StoreFront() {
   const location = useLocation()
   return (
     <>
+      <ScrollToTop />
       <Navbar />
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
@@ -131,4 +133,24 @@ export default function App() {
       </AuthProvider>
     </BrowserRouter>
   )
+}
+
+function ScrollToTop() {
+  const { pathname, search } = useLocation()
+
+  useLayoutEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "auto",
+    })
+
+    document.documentElement.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "auto",
+    })
+  }, [pathname, search])
+
+  return null
 }
