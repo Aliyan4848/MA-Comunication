@@ -321,6 +321,12 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const trackGuestOrder = useCallback(async (orderNumber: string, contact: string) => {
     const { data, error: err } = await supabase.rpc("track_guest_order", { p_order_number: orderNumber, p_contact: contact })
     if (err) throw new Error(err.message)
+    // The function returns { error, message } instead of raising, so that a
+    // failed lookup still commits its brute-force-protection bookkeeping
+    // (an uncaught Postgres exception would roll that back along with it).
+    if (data && typeof data === "object" && "error" in data) {
+      throw new Error((data as any).message || "No order found matching that order number and contact info")
+    }
     return data
   }, [])
 
