@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useParams, Link } from "react-router-dom"
+import { useParams, Link, useLocation } from "react-router-dom"
 import { CheckCircle, Package, ArrowRight } from "lucide-react"
 import { motion } from "framer-motion"
 import { useStore } from "../contexts/StoreContext"
@@ -10,7 +10,9 @@ function fmt(n: number) { return "Rs. " + n.toLocaleString() }
 
 export default function OrderConfirmation() {
   const { id } = useParams<{ id: string }>()
-  const { fetchPublicOrder } = useStore()
+const location = useLocation()
+const { fetchPublicOrder } = useStore()
+const orderNumberFromState = (location.state as { orderNumber?: string } | null)?.orderNumber
   const { session } = useAuth()
   const [order, setOrder] = useState<Order | null | undefined>(undefined) // undefined = loading
 
@@ -72,7 +74,7 @@ export default function OrderConfirmation() {
               <Package size={16} className="text-[#2B8EF0]" />
               <span className="text-sm font-semibold text-[var(--ma-foreground)]">Order Details</span>
             </div>
-            <span className="text-xs font-mono text-[#2B8EF0] bg-[#2B8EF0]/10 px-2 py-1 rounded-lg">{order.orderNumber}</span>
+            <span className="text-xs font-mono text-[#2B8EF0] bg-[#2B8EF0]/10 px-2 py-1 rounded-lg">{orderNumberFromState || order.orderNumber}</span>
           </div>
 
           <div className="p-6 space-y-4">
