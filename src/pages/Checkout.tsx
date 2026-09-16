@@ -49,7 +49,10 @@ export default function Checkout() {
         items: items.map(i => ({ productId: i.productId, quantity: i.quantity })),
       })
       clearCart()
-      navigate(`/order-confirmation/${result.orderId}`)
+navigate(`/order-confirmation/${result.orderId}`, {
+  state: { orderNumber: result.orderNumber },
+  replace: true,
+})
     } catch (err: any) {
       setSubmitError(err.message || "We couldn't place your order. Please try again.")
       setSubmitting(false)
