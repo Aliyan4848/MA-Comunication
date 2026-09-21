@@ -48,11 +48,19 @@ export default function Checkout() {
         ...form,
         items: items.map(i => ({ productId: i.productId, quantity: i.quantity })),
       })
+      // Navigate BEFORE clearing the cart. This component's top-level
+      // "if (items.length === 0) navigate('/cart')" guard runs on every
+      // render, and AnimatePresence keeps this component mounted briefly
+      // during the page-transition exit animation. Clearing the cart first
+      // risks that guard re-firing during that window and redirecting to
+      // /cart instead of the confirmation page. Passing the full result via
+      // state also means the confirmation page never depends solely on a
+      // second fetch succeeding to show basic order info.
+      navigate(`/order-confirmation/${result.orderId}`, {
+        state: { orderId: result.orderId, orderNumber: result.orderNumber, total: result.total },
+        replace: true,
+      })
       clearCart()
-navigate(`/order-confirmation/${result.orderId}`, {
-  state: { orderNumber: result.orderNumber },
-  replace: true,
-})
     } catch (err: any) {
       setSubmitError(err.message || "We couldn't place your order. Please try again.")
       setSubmitting(false)
