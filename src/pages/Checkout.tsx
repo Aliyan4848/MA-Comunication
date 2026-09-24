@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { useState, useRef } from "react"
+=======
+import { useState } from "react"
+>>>>>>> 56276737b0474cf0649d5d2804f9f698a0fb6307
 import { useNavigate } from "react-router-dom"
 import { useCart } from "../contexts/CartContext"
 import { useStore } from "../contexts/StoreContext"
@@ -16,6 +20,7 @@ export default function Checkout() {
   const [submitting, setSubmitting] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [submitError, setSubmitError] = useState("")
+<<<<<<< HEAD
   // A ref, not state: it must be readable synchronously on the very next
   // render triggered by clearCart(), with no setState-batching delay. This
   // is what actually breaks the redirect race, not just call-ordering —
@@ -23,15 +28,21 @@ export default function Checkout() {
   // regardless of whether navigate() or clearCart() ran first, so the guard
   // below needs its own signal that a successful checkout is in progress.
   const orderSubmittedRef = useRef(false)
+=======
+>>>>>>> 56276737b0474cf0649d5d2804f9f698a0fb6307
 
   const delivery = settings.deliveryCharge
   const total = subtotal + delivery
 
+<<<<<<< HEAD
   // Only redirect to /cart when the customer arrives at /checkout with an
   // already-empty cart. Once an order has just been placed successfully,
   // clearCart() also makes items.length === 0 — that must never trigger
   // this same redirect.
   if (items.length === 0 && !orderSubmittedRef.current) {
+=======
+  if (items.length === 0) {
+>>>>>>> 56276737b0474cf0649d5d2804f9f698a0fb6307
     navigate("/cart")
     return null
   }
@@ -59,10 +70,21 @@ export default function Checkout() {
         ...form,
         items: items.map(i => ({ productId: i.productId, quantity: i.quantity })),
       })
+<<<<<<< HEAD
       // Set this BEFORE navigate/clearCart — it must already be true by the
       // time any re-render (triggered by either call below) reaches the
       // empty-cart guard at the top of this component.
       orderSubmittedRef.current = true
+=======
+      // Navigate BEFORE clearing the cart. This component's top-level
+      // "if (items.length === 0) navigate('/cart')" guard runs on every
+      // render, and AnimatePresence keeps this component mounted briefly
+      // during the page-transition exit animation. Clearing the cart first
+      // risks that guard re-firing during that window and redirecting to
+      // /cart instead of the confirmation page. Passing the full result via
+      // state also means the confirmation page never depends solely on a
+      // second fetch succeeding to show basic order info.
+>>>>>>> 56276737b0474cf0649d5d2804f9f698a0fb6307
       navigate(`/order-confirmation/${result.orderId}`, {
         state: { orderId: result.orderId, orderNumber: result.orderNumber, total: result.total },
         replace: true,
