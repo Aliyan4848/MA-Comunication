@@ -1,7 +1,7 @@
 
 import { useState, useRef } from "react"
 
-import { useState } from "react"
+
 
 import { useNavigate } from "react-router-dom"
 import { useCart } from "../contexts/CartContext"
@@ -40,7 +40,7 @@ export default function Checkout() {
   // this same redirect.
   if (items.length === 0 && !orderSubmittedRef.current) {
 
-  if (items.length === 0) {
+  
 
     navigate("/cart")
     return null
