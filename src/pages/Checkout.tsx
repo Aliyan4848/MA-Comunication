@@ -1,8 +1,8 @@
-<<<<<<< HEAD
+
 import { useState, useRef } from "react"
-=======
+
 import { useState } from "react"
->>>>>>> 56276737b0474cf0649d5d2804f9f698a0fb6307
+
 import { useNavigate } from "react-router-dom"
 import { useCart } from "../contexts/CartContext"
 import { useStore } from "../contexts/StoreContext"
