@@ -51,6 +51,10 @@ export default function AdminProductForm() {
   const [saving, setSaving] = useState(false)
   const [autoSlug, setAutoSlug] = useState(isNew)
 
+  useEffect(() => {
+    if (existing && !isNew) setForm({ ...existing })
+  }, [existing?.id, existing?.updatedAt, isNew])
+
   const set = (field: keyof Product, val: any) => setForm(prev => ({ ...prev, [field]: val }))
 
   const handleNameChange = (name: string) => {

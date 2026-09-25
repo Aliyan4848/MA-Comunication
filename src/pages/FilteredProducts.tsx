@@ -1,6 +1,7 @@
 import { useStore } from "../contexts/StoreContext"
 import ProductCard from "../components/ui/ProductCard"
 import ScrollReveal from "../components/ui/ScrollReveal"
+import { useSeo } from "../lib/seo"
 
 interface Props {
   title: string
@@ -9,6 +10,8 @@ interface Props {
 }
 
 export default function FilteredProducts({ title, subtitle, filter }: Props) {
+  const path = title.toLowerCase().replace(/\s+/g, "-")
+  useSeo({ title: `${title} Mobile Accessories`, description: `${subtitle}. Browse ${title.toLowerCase()} from MA Communication in Pakistan.`, path: `/${path}` })
   const { products, categories } = useStore()
   const displayed = products.filter(p => p.published && filter(p))
   const getCat = (id: string) => categories.find(c => c.id === id)

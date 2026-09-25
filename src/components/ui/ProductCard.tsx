@@ -56,6 +56,9 @@ export default function ProductCard({ product, category }: Props) {
             src={mainImage}
             alt={product.name}
             loading="lazy"
+            width={500}
+            height={500}
+            decoding="async"
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.07]"
           />
 

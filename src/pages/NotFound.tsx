@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom"
 import { ArrowLeft, Zap } from "lucide-react"
 import { motion } from "framer-motion"
+import { useSeo } from "../lib/seo"
 
 export default function NotFound() {
+  useSeo({ title: "Page Not Found", description: "The page you requested could not be found.", path: window.location.pathname, noIndex: true })
   return (
     <div className="min-h-screen flex items-center justify-center px-4 py-20">
       <motion.div

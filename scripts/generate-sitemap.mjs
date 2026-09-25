@@ -3,14 +3,14 @@
 // and writes a static public/sitemap.xml that lists real routes.
 // Deliberately excludes /admin/* — those are also blocked in public/robots.txt.
 import { createClient } from "@supabase/supabase-js"
-import { writeFileSync, existsSync } from "node:fs"
+import { writeFileSync } from "node:fs"
 import { fileURLToPath } from "node:url"
 import { dirname, join } from "node:path"
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const outPath = join(__dirname, "..", "public", "sitemap.xml")
 
-const SITE_URL = process.env.VITE_SITE_URL || "https://ma-comunication.vercel.app"
+const SITE_URL = "https://ma-comunication.vercel.app"
 const SUPABASE_URL = process.env.SITEMAP_SUPABASE_URL || process.env.VITE_SUPABASE_URL
 const SUPABASE_ANON_KEY = process.env.SITEMAP_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY
 
@@ -24,8 +24,14 @@ const STATIC_ROUTES = [
   { path: "/contact", changefreq: "monthly", priority: "0.4" },
 ]
 
-function urlEntry(path, changefreq, priority) {
-  return `  <url>\n    <loc>${SITE_URL}${path}</loc>\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority}</priority>\n  </url>`
+function urlEntry(path, changefreq, priority, lastmod) {
+  const loc = new URL(path, SITE_URL).href
+  const lastmodTag = lastmod && !Number.isNaN(Date.parse(lastmod)) ? `\n    <lastmod>${new Date(lastmod).toISOString().slice(0, 10)}</lastmod>` : ""
+  return `  <url>\n    <loc>${escapeXml(loc)}</loc>${lastmodTag}\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority}</priority>\n  </url>`
+}
+
+function escapeXml(value) {
+  return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;")
 }
 
 async function main() {
@@ -43,16 +49,18 @@ async function main() {
         .eq("published", true)
       if (prodErr) throw prodErr
       for (const p of products || []) {
-        entries.push(urlEntry(`/products/${p.slug}`, "weekly", "0.8"))
+        if (!p.slug) continue
+        entries.push(urlEntry(`/products/${encodeURIComponent(p.slug)}`, "weekly", "0.8", p.updated_at))
       }
 
       const { data: categories, error: catErr } = await supabase
         .from("categories")
-        .select("slug")
+        .select("slug, updated_at")
         .eq("active", true)
       if (catErr) throw catErr
       for (const c of categories || []) {
-        entries.push(urlEntry(`/categories/${c.slug}`, "weekly", "0.6"))
+        if (!c.slug) continue
+        entries.push(urlEntry(`/categories/${encodeURIComponent(c.slug)}`, "weekly", "0.6", c.updated_at))
       }
 
       console.log(`[sitemap] Included ${products?.length || 0} products and ${categories?.length || 0} categories.`)

@@ -71,6 +71,8 @@ interface StoreContextType {
 
 const StoreContext = createContext<StoreContextType | null>(null)
 
+const PRODUCT_COLUMNS = "id,name,slug,sku,brand,short_description,description,price,sale_price,stock,low_stock_threshold,category_id,specifications,features,featured,new_arrival,best_seller,published,created_at,updated_at"
+
 const emptySettings: SiteSettings = {
   businessName: "", logo: "", tagline: "", phone: "", email: "", address: "",
   whatsapp: "", facebook: "", instagram: "", tiktok: "", hours: "", footerText: "",
@@ -97,11 +99,35 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const refreshProducts = useCallback(async () => {
     const { data, error: err } = await supabase
       .from("products")
-      .select("*, product_images(*)")
+      .select(PRODUCT_COLUMNS)
       .order("created_at", { ascending: false })
     if (err) { setError(err.message); return }
-    setProducts((data || []).map(mapProduct))
-  }, [])
+
+    const productIds = (data || []).map(product => product.id)
+    const [{ data: imageRows, error: imageError }, { data: costRows, error: costError }] = await Promise.all([
+      productIds.length
+        ? supabase.from("product_images").select("id,product_id,url,alt,sort_order").in("product_id", productIds)
+        : Promise.resolve({ data: [], error: null }),
+      isAdmin
+        ? supabase.rpc("admin_get_product_costs")
+        : Promise.resolve({ data: [], error: null }),
+    ])
+    if (imageError) { setError(imageError.message); return }
+    if (costError) { setError(costError.message); return }
+
+    const imagesByProduct = new Map<string, any[]>()
+    for (const image of imageRows || []) {
+      const rows = imagesByProduct.get(image.product_id) || []
+      rows.push(image)
+      imagesByProduct.set(image.product_id, rows)
+    }
+    const costsByProduct = new Map((costRows || []).map((row: any) => [row.product_id, row.cost_price]))
+    setProducts((data || []).map(product => mapProduct({
+      ...product,
+      product_images: imagesByProduct.get(product.id) || [],
+      cost_price: isAdmin ? costsByProduct.get(product.id) ?? null : null,
+    })))
+  }, [isAdmin])
 
   const refreshCategories = useCallback(async () => {
     const { data, error: err } = await supabase.from("categories").select("*").order("sort_order")
@@ -148,6 +174,11 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const addProduct = useCallback(async (p: Product) => {
     const { data, error: err } = await supabase.from("products").insert(productToRow(p)).select("id").single()
     if (err) throw new Error(err.message)
+    const { error: costError } = await supabase.rpc("admin_set_product_cost", {
+      p_product_id: data.id,
+      p_cost_price: p.costPrice ?? null,
+    })
+    if (costError) throw new Error(costError.message)
     if (p.images.length > 0 && data) {
       const rows = p.images.map((img, i) => ({ product_id: data.id, url: img.url, alt: img.alt, sort_order: i }))
       const { error: imgErr } = await supabase.from("product_images").insert(rows)
@@ -159,6 +190,11 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const updateProduct = useCallback(async (p: Product) => {
     const { error: err } = await supabase.from("products").update(productToRow(p)).eq("id", p.id)
     if (err) throw new Error(err.message)
+    const { error: costError } = await supabase.rpc("admin_set_product_cost", {
+      p_product_id: p.id,
+      p_cost_price: p.costPrice ?? null,
+    })
+    if (costError) throw new Error(costError.message)
     // Replace image set (simple + correct; catalog-sized data makes this cheap)
     const { error: delErr } = await supabase.from("product_images").delete().eq("product_id", p.id)
     if (delErr) throw new Error(delErr.message)

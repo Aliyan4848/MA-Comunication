@@ -3,8 +3,10 @@ import { Phone, Mail, MapPin, Clock, Globe, Link2, MessageCircle } from "lucide-
 import { useStore } from "../contexts/StoreContext"
 import { useToast } from "../contexts/ToastContext"
 import ScrollReveal from "../components/ui/ScrollReveal"
+import { useSeo } from "../lib/seo"
 
 export default function Contact() {
+  useSeo({ title: "Contact MA Communication", description: "Contact MA Communication in Pakistan about mobile accessories, products and orders.", path: "/contact" })
   const { settings } = useStore()
   const { toast } = useToast()
   const [form, setForm] = useState({ name: "", phone: "", email: "", message: "" })

@@ -2,7 +2,7 @@ import { useState } from "react"
 import { NavLink, Outlet, useNavigate } from "react-router-dom"
 import {
   LayoutDashboard, Package, Tag, ShoppingBag, Home, Settings,
-  LogOut, Zap, Menu, X, ChevronRight, Users, Star
+  LogOut, Zap, Menu, X, ChevronRight, Users, Star, CircleDollarSign
 } from "lucide-react"
 import { useStore } from "../../contexts/StoreContext"
 import { useAuth } from "../../contexts/AuthContext"
@@ -18,6 +18,7 @@ const navItems = [
   { to: "/admin/orders", icon: ShoppingBag, label: "Orders" },
   { to: "/admin/customers", icon: Users, label: "Customers" },
   { to: "/admin/reviews", icon: Star, label: "Reviews" },
+  { to: "/admin/profit", icon: CircleDollarSign, label: "Profit" },
   { to: "/admin/homepage", icon: Home, label: "Homepage" },
   { to: "/admin/settings", icon: Settings, label: "Settings" },
 ]

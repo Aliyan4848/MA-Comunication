@@ -1,8 +1,10 @@
 import { Shield, Zap, Star, Users } from "lucide-react"
 import { Link } from "react-router-dom"
 import ScrollReveal from "../components/ui/ScrollReveal"
+import { useSeo } from "../lib/seo"
 
 export default function About() {
+  useSeo({ title: "About MA Communication", description: "Learn about MA Communication and browse mobile accessories available in Pakistan.", path: "/about" })
   return (
     <div className="pt-20 min-h-screen">
       {/* Hero */}

@@ -3,10 +3,12 @@ import { Trash2, Minus, Plus, ShoppingCart, ArrowRight } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useCart } from "../contexts/CartContext"
 import { useStore } from "../contexts/StoreContext"
+import { useSeo } from "../lib/seo"
 
 function fmt(n: number) { return "Rs. " + n.toLocaleString() }
 
 export default function Cart() {
+  useSeo({ title: "Shopping Cart", description: "Review the items in your MA Communication shopping cart.", path: "/cart", noIndex: true })
   const { items, removeFromCart, updateQty, subtotal, count } = useCart()
   const { settings } = useStore()
   const navigate = useNavigate()

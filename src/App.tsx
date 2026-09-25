@@ -45,6 +45,7 @@ import AdminHomepage from "./pages/admin/AdminHomepage"
 import AdminSettings from "./pages/admin/AdminSettings"
 import AdminCustomers from "./pages/admin/AdminCustomers"
 import AdminReviews from "./pages/admin/AdminReviews"
+import AdminProfit from "./pages/admin/AdminProfit"
 
 function PageTransition({ children }: { children: React.ReactNode }) {
   return (
@@ -122,6 +123,7 @@ export default function App() {
                   <Route path="orders/:id" element={<AdminOrderDetail />} />
                   <Route path="customers" element={<AdminCustomers />} />
                   <Route path="reviews" element={<AdminReviews />} />
+                  <Route path="profit" element={<AdminProfit />} />
                   <Route path="homepage" element={<AdminHomepage />} />
                   <Route path="settings" element={<AdminSettings />} />
                 </Route>

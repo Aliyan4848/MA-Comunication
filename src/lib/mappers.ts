@@ -62,7 +62,6 @@ export function productToRow(p: Product) {
     description: p.description,
     price: p.price,
     sale_price: p.salePrice ?? null,
-    cost_price: p.costPrice ?? null,
     stock: p.stock,
     low_stock_threshold: p.lowStockThreshold,
     category_id: p.categoryId || null,

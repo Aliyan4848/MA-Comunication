@@ -6,10 +6,12 @@ import { useState, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import { useCart } from "../contexts/CartContext"
 import { useStore } from "../contexts/StoreContext"
+import { useSeo } from "../lib/seo"
 
 function fmt(n: number) { return "Rs. " + n.toLocaleString() }
 
 export default function Checkout() {
+  useSeo({ title: "Checkout", description: "Complete your MA Communication order.", path: "/checkout", noIndex: true })
   const { items, subtotal, clearCart } = useCart()
   const { settings, placeOrder } = useStore()
   const navigate = useNavigate()

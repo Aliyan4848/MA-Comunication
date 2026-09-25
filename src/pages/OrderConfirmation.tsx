@@ -5,6 +5,7 @@ import { motion } from "framer-motion"
 import { useStore } from "../contexts/StoreContext"
 import { useAuth } from "../contexts/AuthContext"
 import type { Order } from "../types"
+import { useSeo } from "../lib/seo"
 
 function fmt(n: number) { return "Rs. " + n.toLocaleString() }
 
@@ -16,6 +17,7 @@ interface CheckoutState {
 
 export default function OrderConfirmation() {
   const { id } = useParams<{ id: string }>()
+  useSeo({ title: "Order Confirmation", description: "Your MA Communication order confirmation.", path: `/order-confirmation/${id || ""}`, noIndex: true })
   const location = useLocation()
   const { fetchPublicOrder } = useStore()
   const { session } = useAuth()

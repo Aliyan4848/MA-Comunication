@@ -11,8 +11,8 @@ import { useSeo } from "../lib/seo"
 export default function Home() {
   const { homepage } = useStore()
   useSeo({
-    title: "MA Communication | Premium Mobile Accessories",
-    description: "Shop premium chargers, earbuds, power banks, smartwatches and mobile accessories at MA Communication. Fast delivery across Pakistan.",
+    title: "MA Communication | Mobile Accessories in Pakistan",
+    description: "Shop mobile chargers, cables, earbuds, power banks, smart watches and speakers from MA Communication in Pakistan.",
     path: "/",
     image: homepage.hero.image,
   })

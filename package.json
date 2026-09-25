@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "prebuild": "node scripts/generate-sitemap.mjs",
-    "build": "npm run prebuild && vite build",
+    "build": "vite build",
+    "postbuild": "node scripts/generate-seo-pages.mjs",
     "preview": "vite preview",
     "format": "oxfmt"
   },

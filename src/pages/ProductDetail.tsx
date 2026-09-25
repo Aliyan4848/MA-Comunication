@@ -1,6 +1,6 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useParams, Link, useNavigate } from "react-router-dom"
-import { ChevronLeft, ShoppingCart, Minus, Plus, Share2, ArrowRight } from "lucide-react"
+import { ShoppingCart, Minus, Plus, Share2, ArrowRight } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useStore } from "../contexts/StoreContext"
 import { useCart } from "../contexts/CartContext"
@@ -16,7 +16,7 @@ function formatPrice(p: number) {
 
 export default function ProductDetail() {
   const { slug } = useParams<{ slug: string }>()
-  const { products, categories } = useStore()
+  const { products, categories, fetchProductReviews } = useStore()
   const { addToCart } = useCart()
   const { toast } = useToast()
   const navigate = useNavigate()
@@ -24,9 +24,17 @@ export default function ProductDetail() {
   const product = products.find(p => p.slug === slug)
   const [imgIdx, setImgIdx] = useState(0)
   const [qty, setQty] = useState(1)
+  const [reviewStats, setReviewStats] = useState<any>(null)
+  const category = categories.find(c => c.id === product?.categoryId)
+
+  useEffect(() => {
+    let active = true
+    if (product?.published) fetchProductReviews(product.id).then(({ stats, reviews }) => { if (active) setReviewStats({ ...stats, reviews }) }).catch(() => {})
+    return () => { active = false }
+  }, [product?.id, product?.published, fetchProductReviews])
 
   useSeo({
-    title: product ? product.name : "Product not found",
+    title: product ? `${product.name}${category?.name ? ` | ${category.name} in Pakistan` : " | Mobile Accessories in Pakistan"}` : "Product not found",
     description: product ? (product.shortDescription || product.description).slice(0, 160) : undefined,
     path: `/products/${slug || ""}`,
     image: product?.images[0]?.url,
@@ -36,18 +44,34 @@ export default function ProductDetail() {
     product && product.published
       ? {
           "@context": "https://schema.org",
-          "@type": "Product",
-          name: product.name,
-          description: product.shortDescription || product.description,
-          sku: product.sku,
-          brand: product.brand ? { "@type": "Brand", name: product.brand } : undefined,
-          image: product.images.map(i => i.url),
-          offers: {
-            "@type": "Offer",
-            priceCurrency: "PKR",
-            price: product.salePrice ?? product.price,
-            availability: product.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
-          },
+          "@graph": [
+            {
+              "@type": "Product",
+              "@id": `https://ma-comunication.vercel.app/products/${encodeURIComponent(product.slug)}#product`,
+              name: product.name,
+              url: `https://ma-comunication.vercel.app/products/${encodeURIComponent(product.slug)}`,
+              description: product.shortDescription || product.description,
+              sku: product.sku || undefined,
+              brand: product.brand ? { "@type": "Brand", name: product.brand } : undefined,
+              image: product.images.map(i => i.url).filter(Boolean),
+              offers: {
+                "@type": "Offer",
+                priceCurrency: "PKR",
+                price: product.salePrice ?? product.price,
+                availability: product.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+                url: `https://ma-comunication.vercel.app/products/${encodeURIComponent(product.slug)}`,
+                seller: { "@type": "Organization", name: "MA Communication", url: "https://ma-comunication.vercel.app/" },
+              },
+              ...(reviewStats?.review_count > 0 && reviewStats?.average_rating > 0 ? { aggregateRating: { "@type": "AggregateRating", ratingValue: reviewStats.average_rating, reviewCount: reviewStats.review_count } } : {}),
+              ...(reviewStats?.reviews?.length ? { review: reviewStats.reviews.map((review: any) => ({ "@type": "Review", name: review.title || `Review for ${product.name}`, reviewBody: review.body || undefined, datePublished: review.created_at, author: { "@type": "Person", name: review.reviewer_name }, reviewRating: { "@type": "Rating", ratingValue: review.rating, bestRating: 5, worstRating: 1 } })) } : {}),
+              ...(category ? { category: category.name } : {}),
+            },
+            { "@type": "BreadcrumbList", itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: "https://ma-comunication.vercel.app/" },
+              ...(category ? [{ "@type": "ListItem", position: 2, name: category.name, item: `https://ma-comunication.vercel.app/categories/${encodeURIComponent(category.slug)}` }] : []),
+              { "@type": "ListItem", position: category ? 3 : 2, name: product.name, item: `https://ma-comunication.vercel.app/products/${encodeURIComponent(product.slug)}` },
+            ] },
+          ],
         }
       : null
   )
@@ -63,7 +87,6 @@ export default function ProductDetail() {
     )
   }
 
-  const category = categories.find(c => c.id === product.categoryId)
   const price = product.salePrice ?? product.price
   const discount = product.salePrice
     ? Math.round(((product.price - product.salePrice) / product.price) * 100)
@@ -89,15 +112,13 @@ export default function ProductDetail() {
     <div className="pt-20 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-sm text-[var(--ma-muted)] mb-8">
-          <button onClick={() => navigate(-1)} className="flex items-center gap-1 hover:text-[var(--ma-foreground)] transition-colors">
-            <ChevronLeft size={14} /> Back
-          </button>
-          <span>/</span>
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-[var(--ma-muted)] mb-8">
+          <Link to="/" className="hover:text-[var(--ma-foreground)]">Home</Link>
+          <span aria-hidden="true">/</span>
           {category && <Link to={`/categories/${category.slug}`} className="hover:text-[var(--ma-foreground)] transition-colors">{category.name}</Link>}
-          <span>/</span>
-          <span className="text-[var(--ma-muted)] truncate max-w-48">{product.name}</span>
-        </div>
+          {category && <span aria-hidden="true">/</span>}
+          <span aria-current="page" className="text-[var(--ma-muted)] truncate max-w-48">{product.name}</span>
+        </nav>
 
         <div className="grid lg:grid-cols-2 gap-12 mb-20">
           {/* Gallery */}
@@ -108,6 +129,10 @@ export default function ProductDetail() {
                   key={imgIdx}
                   src={mainImage}
                   alt={product.images[imgIdx]?.alt || product.name}
+                  width={800}
+                  height={800}
+                  fetchPriority="high"
+                  decoding="async"
                   initial={{ opacity: 0, scale: 1.02 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0 }}
@@ -124,7 +149,7 @@ export default function ProductDetail() {
                     onClick={() => setImgIdx(i)}
                     className={`w-16 h-16 rounded-xl overflow-hidden border-2 transition-all flex-shrink-0 ${i === imgIdx ? "border-[#2B8EF0]" : "border-[var(--ma-border)] hover:border-white/30"}`}
                   >
-                    <img src={img.url} alt={img.alt} className="w-full h-full object-cover" />
+                    <img src={img.url} alt={img.alt || product.name} width={64} height={64} loading="lazy" decoding="async" className="w-full h-full object-cover" />
                   </button>
                 ))}
               </div>

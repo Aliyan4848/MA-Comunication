@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 
-const SITE_URL = (import.meta.env.VITE_SITE_URL as string) || "https://ma-comunication.vercel.app"
+const SITE_URL = "https://ma-comunication.vercel.app"
 const SITE_NAME = "MA Communication"
 
 function setMeta(attr: "name" | "property", key: string, content: string) {
@@ -13,6 +13,11 @@ function setMeta(attr: "name" | "property", key: string, content: string) {
   el.setAttribute("content", content)
 }
 
+function canonicalPath(path: string) {
+  const withoutQuery = (path.split(/[?#]/, 1)[0] || "/").replace(/\/{2,}/g, "/")
+  return withoutQuery.length > 1 ? withoutQuery.replace(/\/+$/, "") : "/"
+}
+
 function setCanonical(path: string) {
   let el = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]')
   if (!el) {
@@ -20,7 +25,7 @@ function setCanonical(path: string) {
     el.setAttribute("rel", "canonical")
     document.head.appendChild(el)
   }
-  el.setAttribute("href", `${SITE_URL}${path}`)
+  el.setAttribute("href", `${SITE_URL}${canonicalPath(path)}`)
 }
 
 interface SeoOptions {
@@ -29,6 +34,7 @@ interface SeoOptions {
   path: string
   image?: string
   noIndex?: boolean
+  type?: "website" | "product"
 }
 
 /**
@@ -38,21 +44,27 @@ interface SeoOptions {
  * still see them; social-preview crawlers that don't run JS fall back to the
  * static defaults baked into index.html via .figma/make/site.json.
  */
-export function useSeo({ title, description, path, image, noIndex }: SeoOptions) {
+export function useSeo({ title, description, path, image, noIndex, type = "website" }: SeoOptions) {
   useEffect(() => {
     const fullTitle = !title ? SITE_NAME : title.includes(SITE_NAME) ? title : `${title} | ${SITE_NAME}`
+    const url = `${SITE_URL}${canonicalPath(path)}`
     document.title = fullTitle
-    if (description) {
-      setMeta("name", "description", description)
-      setMeta("property", "og:description", description)
-    }
+    setMeta("name", "description", description || "Shop mobile accessories from MA Communication in Pakistan.")
+    setMeta("name", "twitter:title", fullTitle)
+    setMeta("name", "twitter:description", description || "Shop mobile accessories from MA Communication in Pakistan.")
     setMeta("property", "og:title", fullTitle)
-    setMeta("property", "og:type", "website")
-    setMeta("property", "og:url", `${SITE_URL}${path}`)
+    setMeta("property", "og:description", description || "Shop mobile accessories from MA Communication in Pakistan.")
+    setMeta("property", "og:site_name", SITE_NAME)
+    setMeta("property", "og:type", type)
+    setMeta("property", "og:url", url)
     if (image) {
-      setMeta("property", "og:image", image)
-      setMeta("name", "twitter:image", image)
+      const absoluteImage = new URL(image, SITE_URL).href
+      setMeta("property", "og:image", absoluteImage)
+      setMeta("name", "twitter:image", absoluteImage)
       setMeta("name", "twitter:card", "summary_large_image")
+    } else {
+      document.head.querySelector('meta[property="og:image"]')?.remove()
+      document.head.querySelector('meta[name="twitter:image"]')?.remove()
     }
     setCanonical(path)
 
@@ -64,21 +76,23 @@ export function useSeo({ title, description, path, image, noIndex }: SeoOptions)
         document.head.appendChild(robotsEl)
       }
       robotsEl.setAttribute("content", "noindex, nofollow")
-    } else if (robotsEl && robotsEl.getAttribute("content")?.includes("noindex")) {
-      // Only remove a noindex tag we're responsible for; leave a global one (from site.json) alone.
-      robotsEl.remove()
+    } else {
+      setMeta("name", "robots", "index, follow, max-image-preview:large")
     }
-  }, [title, description, path, image, noIndex])
+  }, [title, description, path, image, noIndex, type])
 }
 
 /** Injects a JSON-LD structured data script for the current page. Removes itself on unmount. */
 export function useStructuredData(data: object | null) {
   useEffect(() => {
+    const existing = document.head.querySelector<HTMLScriptElement>("script#seo-structured-data")
+    existing?.remove()
     if (!data) return
     const script = document.createElement("script")
+    script.id = "seo-structured-data"
     script.type = "application/ld+json"
-    script.text = JSON.stringify(data)
+    script.text = JSON.stringify(data).replace(/</g, "\\u003c")
     document.head.appendChild(script)
-    return () => { document.head.removeChild(script) }
+    return () => { script.remove() }
   }, [JSON.stringify(data)])
 }
