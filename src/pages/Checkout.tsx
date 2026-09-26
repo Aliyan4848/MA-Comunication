@@ -10,6 +10,29 @@ import { useSeo } from "../lib/seo"
 
 function fmt(n: number) { return "Rs. " + n.toLocaleString() }
 
+<<<<<<< HEAD
+=======
+const CHECKOUT_ATTEMPT_STORAGE_KEY = "ma-checkout-attempt-v1"
+
+async function getCheckoutAttemptKey(payload: unknown): Promise<string> {
+  const bytes = new TextEncoder().encode(JSON.stringify(payload))
+  const digest = await crypto.subtle.digest("SHA-256", bytes)
+  const fingerprint = Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, "0")).join("")
+  const stored = sessionStorage.getItem(CHECKOUT_ATTEMPT_STORAGE_KEY)
+  if (stored) {
+    try {
+      const attempt = JSON.parse(stored) as { fingerprint?: string; key?: string }
+      if (attempt.fingerprint === fingerprint && attempt.key && crypto.randomUUID) return attempt.key
+    } catch {
+      sessionStorage.removeItem(CHECKOUT_ATTEMPT_STORAGE_KEY)
+    }
+  }
+  const key = crypto.randomUUID()
+  sessionStorage.setItem(CHECKOUT_ATTEMPT_STORAGE_KEY, JSON.stringify({ fingerprint, key }))
+  return key
+}
+
+>>>>>>> a03a587 (safety fixes)
 export default function Checkout() {
   useSeo({ title: "Checkout", description: "Complete your MA Communication order.", path: "/checkout", noIndex: true })
   const { items, subtotal, clearCart } = useCart()
@@ -67,10 +90,20 @@ export default function Checkout() {
     try {
       // Price and stock are validated and computed server-side inside placeOrder;
       // nothing the browser sends here is trusted for pricing.
+<<<<<<< HEAD
       const result = await placeOrder({
         ...form,
         items: items.map(i => ({ productId: i.productId, quantity: i.quantity })),
       })
+=======
+      const checkoutInput = {
+        ...form,
+        items: items.map(i => ({ productId: i.productId, quantity: i.quantity })),
+      }
+      const idempotencyKey = await getCheckoutAttemptKey(checkoutInput)
+      const result = await placeOrder({ ...checkoutInput, idempotencyKey })
+      sessionStorage.removeItem(CHECKOUT_ATTEMPT_STORAGE_KEY)
+>>>>>>> a03a587 (safety fixes)
 
       // Set this BEFORE navigate/clearCart — it must already be true by the
       // time any re-render (triggered by either call below) reaches the
