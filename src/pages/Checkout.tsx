@@ -10,8 +10,6 @@ import { useSeo } from "../lib/seo"
 
 function fmt(n: number) { return "Rs. " + n.toLocaleString() }
 
-<<<<<<< HEAD
-=======
 const CHECKOUT_ATTEMPT_STORAGE_KEY = "ma-checkout-attempt-v1"
 
 async function getCheckoutAttemptKey(payload: unknown): Promise<string> {
@@ -32,7 +30,6 @@ async function getCheckoutAttemptKey(payload: unknown): Promise<string> {
   return key
 }
 
->>>>>>> a03a587 (safety fixes)
 export default function Checkout() {
   useSeo({ title: "Checkout", description: "Complete your MA Communication order.", path: "/checkout", noIndex: true })
   const { items, subtotal, clearCart } = useCart()
@@ -90,12 +87,6 @@ export default function Checkout() {
     try {
       // Price and stock are validated and computed server-side inside placeOrder;
       // nothing the browser sends here is trusted for pricing.
-<<<<<<< HEAD
-      const result = await placeOrder({
-        ...form,
-        items: items.map(i => ({ productId: i.productId, quantity: i.quantity })),
-      })
-=======
       const checkoutInput = {
         ...form,
         items: items.map(i => ({ productId: i.productId, quantity: i.quantity })),
@@ -103,7 +94,6 @@ export default function Checkout() {
       const idempotencyKey = await getCheckoutAttemptKey(checkoutInput)
       const result = await placeOrder({ ...checkoutInput, idempotencyKey })
       sessionStorage.removeItem(CHECKOUT_ATTEMPT_STORAGE_KEY)
->>>>>>> a03a587 (safety fixes)
 
       // Set this BEFORE navigate/clearCart — it must already be true by the
       // time any re-render (triggered by either call below) reaches the

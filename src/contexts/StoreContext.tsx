@@ -5,11 +5,7 @@ import {
   productToRow, categoryToRow, settingsToRow, homepageToRow,
 } from "../lib/mappers"
 import { useAuth } from "./AuthContext"
-<<<<<<< HEAD
-import type { Category, Product, Order, OrderStatus, SiteSettings, HomepageContent } from "../types"
-=======
 import type { Category, Product, Order, SiteSettings, HomepageContent } from "../types"
->>>>>>> a03a587 (safety fixes)
 
 export interface CheckoutInput {
   customerName: string
@@ -19,10 +15,7 @@ export interface CheckoutInput {
   address: string
   notes: string
   items: { productId: string; quantity: number }[]
-<<<<<<< HEAD
-=======
   idempotencyKey: string
->>>>>>> a03a587 (safety fixes)
 }
 
 export interface CheckoutResult {
@@ -52,10 +45,6 @@ interface StoreContextType {
 
   placeOrder: (input: CheckoutInput) => Promise<CheckoutResult>
   fetchPublicOrder: (id: string) => Promise<Order | null>
-<<<<<<< HEAD
-  updateOrderStatus: (id: string, status: OrderStatus) => Promise<void>
-=======
->>>>>>> a03a587 (safety fixes)
   getOrder: (id: string) => Order | undefined
   refreshOrders: () => Promise<void>
 
@@ -260,13 +249,9 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   // The ONLY path to creating an order: a SECURITY DEFINER Postgres function that
   // validates stock and computes prices server-side. The browser never sets a price.
   const placeOrder = useCallback(async (input: CheckoutInput): Promise<CheckoutResult> => {
-<<<<<<< HEAD
-    const idempotencyKey = crypto.randomUUID()
-=======
     if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(input.idempotencyKey)) {
       throw new Error("Invalid checkout attempt. Refresh checkout and try again.")
     }
->>>>>>> a03a587 (safety fixes)
     const { data, error: err } = await supabase.rpc("create_order", {
       p_customer_name: input.customerName,
       p_phone: input.phone,
@@ -275,11 +260,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       p_address: input.address,
       p_notes: input.notes,
       p_items: input.items.map(i => ({ product_id: i.productId, quantity: i.quantity })),
-<<<<<<< HEAD
-      p_idempotency_key: idempotencyKey,
-=======
       p_idempotency_key: input.idempotencyKey,
->>>>>>> a03a587 (safety fixes)
     })
     if (err) throw new Error(err.message)
     const result = data as { id: string; order_number: string; total: number }
@@ -293,15 +274,6 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     return mapOrder(data)
   }, [])
 
-<<<<<<< HEAD
-  const updateOrderStatus = useCallback(async (id: string, status: OrderStatus) => {
-    const { error: err } = await supabase.from("orders").update({ status, updated_at: new Date().toISOString() }).eq("id", id)
-    if (err) throw new Error(err.message)
-    await refreshOrders()
-  }, [refreshOrders])
-
-=======
->>>>>>> a03a587 (safety fixes)
   const getOrder = useCallback((id: string) => orders.find(o => o.id === id), [orders])
 
   // ---------------- Settings / Homepage ----------------
@@ -421,11 +393,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         products, categories, orders, settings, homepage, loading, ordersLoading, error,
         addProduct, updateProduct, deleteProduct, getProduct,
         addCategory, updateCategory, deleteCategory,
-<<<<<<< HEAD
-        placeOrder, fetchPublicOrder, updateOrderStatus, getOrder, refreshOrders,
-=======
         placeOrder, fetchPublicOrder, getOrder, refreshOrders,
->>>>>>> a03a587 (safety fixes)
         updateSettings, updateHomepage, uploadProductImage,
         fetchMyProfile, updateMyProfile, fetchMyAddresses, addMyAddress, updateMyAddress, deleteMyAddress,
         fetchMyOrders, fetchMyOrderDetail, trackGuestOrder, updateOrderStatusAdmin, setOrderShipment,
